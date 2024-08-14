@@ -24,7 +24,10 @@ const vuetify = createVuetify({
   },
 })
 
-createApp(App).use(vuetify).mount('#app').$nextTick(() => {
+createApp(App)
+  .use(vuetify)
+  .mount('#app')
+  .$nextTick(() => {
   // Use contextBridge
   window.ipcRenderer.on('main-process-message', (_event, message) => {
     console.log(message)
