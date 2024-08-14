@@ -13,6 +13,7 @@ This application searches to answer that desire, planning to implement a fast ru
 Currently MCM is using
 
 - Node
+- Typescript
 - Vite
 - Electron
 - Vue
