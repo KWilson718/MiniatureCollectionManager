@@ -6,6 +6,6 @@
     >
         <h1>Welcome to M C M</h1>
         <p>The One Stop Shop for all your Miniature Wargame Collection Categorization Needs</p>
-        <p>This is severely under development, so please stay tuned</p>
+        <p>This is severely under development, so please stay tuned for more</p>
     </v-sheet>
 </template>
