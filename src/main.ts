@@ -1,4 +1,7 @@
+// Vue 
 import { createApp } from 'vue'
+
+// Local Styles
 import './style.css'
 
 // Components
@@ -13,9 +16,18 @@ import * as directives from 'vuetify/directives'
 const vuetify = createVuetify({
   components,
   directives,
+  theme:{
+    defaultTheme: 'dark',
+    themes:{
+      // Can add in themes here generated in the format from https://vuetifyjs.com/en/features/theme/#javascript
+    }
+  },
 })
 
-createApp(App).use(vuetify).mount('#app').$nextTick(() => {
+createApp(App)
+  .use(vuetify)
+  .mount('#app')
+  .$nextTick(() => {
   // Use contextBridge
   window.ipcRenderer.on('main-process-message', (_event, message) => {
     console.log(message)
