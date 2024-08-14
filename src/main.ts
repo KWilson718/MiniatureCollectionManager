@@ -16,6 +16,12 @@ import * as directives from 'vuetify/directives'
 const vuetify = createVuetify({
   components,
   directives,
+  theme:{
+    defaultTheme: 'dark',
+    themes:{
+      // Can add in themes here generated in the format from https://vuetifyjs.com/en/features/theme/#javascript
+    }
+  },
 })
 
 createApp(App).use(vuetify).mount('#app').$nextTick(() => {
