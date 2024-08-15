@@ -1,5 +1,6 @@
 // Vue 
 import { createApp } from 'vue'
+import router from './lib/router'
 
 // Local Styles
 import './style.css'
@@ -26,6 +27,7 @@ const vuetify = createVuetify({
 
 createApp(App)
   .use(vuetify)
+  .use(router)
   .mount('#app')
   .$nextTick(() => {
   // Use contextBridge
