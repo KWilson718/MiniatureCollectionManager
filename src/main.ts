@@ -1,5 +1,7 @@
 // Vue 
 import { createApp } from 'vue'
+import router from './lib/router'
+import { createPinia } from 'pinia'
 
 // Local Styles
 import './style.css'
@@ -26,6 +28,8 @@ const vuetify = createVuetify({
 
 createApp(App)
   .use(vuetify)
+  .use(router)
+  .use(createPinia())
   .mount('#app')
   .$nextTick(() => {
   // Use contextBridge

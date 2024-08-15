@@ -1,9 +1,12 @@
 <script setup lang="ts">
-  import LandingMessage from './components/LandingMessage.vue';
 </script>
 
 <template>
-  <LandingMessage/>
+  <header>
+    <router-link to="/">Home</router-link>
+    <router-link to="/universal-stats">Stats</router-link>
+  </header>
+  <router-view />
 </template>
 
 <style scoped>
