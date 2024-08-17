@@ -1,4 +1,8 @@
 <script setup lang="ts">
+  import { useStore } from './lib/store';
+  const store = useStore();
+
+  console.log(store.isDatabaseLoaded);
 </script>
 
 <template>
