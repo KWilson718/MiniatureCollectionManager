@@ -2,7 +2,8 @@
   import { useStore } from './lib/store';
   const store = useStore();
 
-  console.log(store.isDatabaseLoaded);
+  const dbLoaded = await store.isDatabaseLoaded;
+  console.log(`The check to see if a database is loaded in the store returns: ${dbLoaded}`);
 </script>
 
 <template>
