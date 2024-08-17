@@ -18,7 +18,9 @@ Currently MCM is using
 - Electron
 - Vue
 - Vuetify
+- RxJS (RxDB depends on this)
+- RxDB
 
-MCM is planning on incorporating
+# Developmental Status
 
-- RxDB for backend database management
+Currently, MCM is in the beginning stages of development. Technologies are being added & tested to make sure that they work, while plans for the layout of everything as well as critical functionality are still going together. 
