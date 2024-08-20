@@ -26,10 +26,12 @@ const vuetify = createVuetify({
   },
 })
 
+const pinia = createPinia();
+
 createApp(App)
   .use(vuetify)
   .use(router)
-  .use(createPinia())
+  .use(pinia)
   .mount('#app')
   .$nextTick(() => {
   // Use contextBridge
