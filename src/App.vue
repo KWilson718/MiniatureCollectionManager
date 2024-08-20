@@ -3,12 +3,16 @@
 </script>
 
 <template>
-  <Header></Header>
-  <header>
-    <router-link to="/">Home</router-link>
-    <router-link to="/universal-stats">Stats</router-link>
-  </header>
-  <router-view />
+  <v-app style="width: 100%;">
+    <v-layout class="rounded rounded-md"  style="width: 100%;">
+      <v-app-bar title="Miniature Collection Manager">
+        <Header></Header>
+      </v-app-bar>
+      <v-main class="d-flex align-center justify-center">
+        <router-view />
+      </v-main>
+    </v-layout>
+  </v-app>
 </template>
 
 <style scoped>
