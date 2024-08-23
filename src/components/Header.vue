@@ -36,6 +36,11 @@
                 to: '/subcategory-read',
             },
             {
+                title: 'Group Read',
+                disabled: false,
+                to: '/group-read',
+            },
+            {
                 title: 'Item',
                 disabled: false,
                 to: '/item-read',
