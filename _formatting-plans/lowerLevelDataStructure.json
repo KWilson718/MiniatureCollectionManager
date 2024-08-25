@@ -1,0 +1,23 @@
+{
+    "id": "generatedID",
+    "name": "Group Name",
+    "metadata": {
+        "created-at": "date",
+        "updated-at": "date"
+    },
+    "items": [
+        {
+            "id": "generatedID",
+            "name": "Item Name",
+            "description": "Description of Miniatures",
+            "metadata": {
+                "created-at": "date",
+                "updated-at": "date"
+            },
+            "qty-nos": "number",
+            "qty-built": "number",
+            "qty-partial": "number",
+            "qty-finished": "number"
+        }
+    ]
+}
