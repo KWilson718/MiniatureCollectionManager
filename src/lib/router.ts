@@ -53,6 +53,21 @@ const routes = [
     component: () => import('../pages/SubCategory/SubCategoryCreate.vue'), // lazy-loaded for fast response time
   },
   {
+    path: '/group-read',
+    name: 'Group Read',
+    component: () => import('../pages/Group/GroupRead.vue'), // lazy-loaded for fast response time
+  },
+  {
+    path: '/group-edit',
+    name: 'Group Edit',
+    component: () => import('../pages/Group/GroupEdit.vue'), // lazy-loaded for fast response time
+  },
+  {
+    path: '/group-create',
+    name: 'Group Create',
+    component: () => import('../pages/Group/GroupCreate.vue'), // lazy-loaded for fast response time
+  },
+  {
     path: '/universal-stats',
     name: 'UniversalStatistics',
     component: () => import('../pages/UniversalStats.vue'), // lazy-loaded for fast response time
