@@ -1,0 +1,27 @@
+{
+    "categories":[
+        {
+            "id": "generatedID",
+            "name": "Category Name",
+            "metadata": {
+                "created-at": "date",
+                "updated-at": "date"
+            },
+            "sub_categories": [
+                {
+                    "id": "generatedID",
+                    "name": "SubCategory Name",
+                    "metadata": {
+                        "created-at": "date",
+                        "updated-at": "date"
+                    },
+                    "groups": [
+                        "child-id-1",
+                        "child-id-2",
+                        "child-id-3"
+                    ]
+                }
+            ]
+        }
+    ]
+}
