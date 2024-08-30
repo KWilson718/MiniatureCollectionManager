@@ -21,7 +21,7 @@
                     class="my-2"
                 ></v-text-field>
 
-                <v-btn class="mt-4" :disabled="!valid" @click="submit">Submit</v-btn>
+                <v-btn class="mt-4" :disabled="!valid" @click="handleSubmit">Submit</v-btn>
             </v-form>
         </v-card-text>
     </v-card>
@@ -29,33 +29,42 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import formMixins from '../../assets/mixins/formMixins.ts';
+import { useSubmit } from '../../composables/useSubmit.ts';
+import { rules } from '../../modules/rules.ts';
 
 export default defineComponent({
-    mixins: [formMixins],
-    data() {
-        return {
-            valid: false,
-            categoryName: '',
-            categoryDesc: '',
-        };
-    },
-    methods: {
-        submit() {
-            if (this.valid) {
-                console.log('Form submitted:', { categoryName: this.categoryName, categoryDesc: this.categoryDesc });
+    setup() {
+        const valid = ref(false);
+        const categoryName = ref('');
+        const categoryDesc = ref('');
+
+        const { submit } = useSubmit();
+
+        const handleSubmit = () => {
+            if (valid.value) {
+                submit({
+                    categoryName: categoryName.value,
+                    categoryDesc: categoryDesc.value
+                });
             }
-        },
+        };
+
+        return {
+            valid,
+            categoryName,
+            categoryDesc,
+            handleSubmit,
+            rules,
+        };
     },
 });
 </script>
 
 <style scoped>
 .formCard {
-    width:50vw;
+    width: 50vw;
     height: 50vh;
-    padding-left: 3rem;
-    padding-right: 3rem;
+    padding: 3rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -65,12 +74,15 @@ export default defineComponent({
 .form-content {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     width: 100%;
+    height: 100%;
+    flex: 1;
 }
 
 .form {
     width: 100%;
-    width: 100%;
+    flex: 1;
 }
 </style>
