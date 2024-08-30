@@ -7,6 +7,7 @@ addRxPlugin(RxDBCleanupPlugin);
 export interface Category {
     id: string;
     name: string;
+    description: string;
     metadata: object;
     subcategories: object;
 }
@@ -14,6 +15,7 @@ export interface Category {
 export interface Group {
     id: string;
     name: string;
+    description: string;
     metadata: object;
     subcategories: object;
 }
@@ -27,6 +29,7 @@ const categorySchema = {
     properties: {
         id: { type: 'string', maxLength: 20 },
         name: { type: 'string' },
+        description: {type: 'string'},
         metadata: { type: 'object' },
         subCategories: { type: 'array', items: { type: 'object' } }
     },
@@ -41,6 +44,7 @@ const groupSchema = {
     properties: {
         id: { type: 'string', maxLength: 20 },
         name: { type: 'string' },
+        description: {type: 'string'},
         metadata: { type: 'object' },
         items: { type: 'array', items: { type: 'object' } }
     },

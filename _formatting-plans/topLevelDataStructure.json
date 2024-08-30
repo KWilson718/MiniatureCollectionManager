@@ -3,6 +3,7 @@
         {
             "id": "generatedID",
             "name": "Category Name",
+            "description": "Notes",
             "metadata": {
                 "created-at": "date",
                 "updated-at": "date"
@@ -11,6 +12,7 @@
                 {
                     "id": "generatedID",
                     "name": "SubCategory Name",
+                    "description": "Notes",
                     "metadata": {
                         "created-at": "date",
                         "updated-at": "date"
