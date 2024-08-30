@@ -1,6 +1,6 @@
-import { ref } from 'vue';
+// import { ref } from 'vue';
 
-export function useSubmit() {
+export function createCatSubmit() {
     const submit = (data: any) => {
         // Process the data
         console.log('Form submitted with data:', data);

@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { useSubmit } from '../../composables/useSubmit.ts';
+import { createCatSubmit } from '../../composables/formAssistants.ts';
 import { rules } from '../../modules/rules.ts';
 
 export default defineComponent({
@@ -38,7 +38,7 @@ export default defineComponent({
         const categoryName = ref('');
         const categoryDesc = ref('');
 
-        const { submit } = useSubmit();
+        const { submit } = createCatSubmit();
 
         const handleSubmit = () => {
             if (valid.value) {
