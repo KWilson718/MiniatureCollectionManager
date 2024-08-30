@@ -1,36 +1,37 @@
-// Pinia Imports
-import {defineStore} from 'pinia';
+import { defineStore } from 'pinia';
+import { Category, Group, checkInitialization, getCategories, getGroups } from './dbController';
 
-// RXDB Imports
-import { isRxDatabase } from 'rxdb';
+interface State {
+  dbInit: boolean;
+  dbCategories: Array<Partial<Category>>; // Simplified type, not directly using RxDocument
+  dbGroups: Array<Partial<Group>>;        // Simplified type, not directly using RxDocument
+}
 
-import dbDexie from './dbController.ts';
+export const useStore = defineStore('collectionStore', {
+  state: (): State => ({
+    dbInit: false,
+    dbCategories: [],
+    dbGroups: [],
+  }),
 
-export const useStore = defineStore('param', {
-    state: () => ({
-        nav: '',
-        db: {},
-    }),
-    getters: {
-        // Should return true if the database has been loaded, if the database can be and is then loaded into the state. Returns false elsewise.
-        async isDatabaseLoaded (){
-            if(isRxDatabase(this.db)){
-                return true;
-            }
-            else{
-                if(isRxDatabase(dbDexie)){
-                    this.db = dbDexie;
-                    return true;
-                }
-                else{
-                    console.log("Error Loading Database, currently set to the following");
-                    console.log(JSON.stringify(dbDexie));
-                    return false;
-                }
-            }
-        }
+  getters: {
+    dbInitialized: (state): boolean => state.dbInit,
+    getDBCategories: (state): Array<Partial<Category>> => state.dbCategories,
+    getDBGroups: (state): Array<Partial<Group>> => state.dbGroups,
+  },
+
+  actions: {
+    async initializeDatabase() {
+      this.dbInit = await checkInitialization();
     },
-    actions: {
-        
+
+    async loadData() {
+      const categories = await getCategories();
+      const groups = await getGroups();
+
+      // Map RxDocuments to plain objects or simplified types
+      this.dbCategories = categories.map(cat => cat.toJSON());
+      this.dbGroups = groups.map(group => group.toJSON());
     }
+  },
 });
