@@ -29,27 +29,23 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { rules } from '../../assets/modules/rules.ts';
+import formMixins from '../../assets/mixins/formMixins.ts';
 
 export default defineComponent({
-    setup() {
-        const valid = ref(false);
-        const categoryName = ref('');
-        const categoryDesc = ref('');
-
-        const submit = () => {
-            if (valid.value) {
-                console.log('Form submitted:', { categoryName: categoryName.value, categoryDesc: categoryDesc.value });
-            }
-        };
-
+    mixins: [formMixins],
+    data() {
         return {
-            valid,
-            categoryName,
-            categoryDesc,
-            submit,
-            rules,
+            valid: false,
+            categoryName: '',
+            categoryDesc: '',
         };
+    },
+    methods: {
+        submit() {
+            if (this.valid) {
+                console.log('Form submitted:', { categoryName: this.categoryName, categoryDesc: this.categoryDesc });
+            }
+        },
     },
 });
 </script>
