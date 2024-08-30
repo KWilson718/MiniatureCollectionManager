@@ -26,12 +26,18 @@ export const useStore = defineStore('collectionStore', {
     },
 
     async loadData() {
-      const categories = await getCategories();
-      const groups = await getGroups();
+      try{
+        await this.initializeDatabase();
+        const categories = await getCategories();
+        const groups = await getGroups();
 
-      // Map RxDocuments to plain objects or simplified types
-      this.dbCategories = categories.map(cat => cat.toJSON());
-      this.dbGroups = groups.map(group => group.toJSON());
+        // Map RxDocuments to plain objects or simplified types
+        this.dbCategories = categories.map(cat => cat.toJSON());
+        this.dbGroups = groups.map(group => group.toJSON());
+      }
+      catch(error) {
+        console.error('Error during data loading:', error);
+      }
     }
   },
 });

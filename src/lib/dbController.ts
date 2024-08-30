@@ -1,7 +1,11 @@
 import { createRxDatabase, RxDatabase, RxCollection, RxDocument, isRxDatabase, addRxPlugin } from 'rxdb';
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
 import { RxDBCleanupPlugin } from 'rxdb/plugins/cleanup';
+import { RxDBLeaderElectionPlugin } from 'rxdb/plugins/leader-election'; // Import the leader election plugin
+
+// Add plugins
 addRxPlugin(RxDBCleanupPlugin);
+addRxPlugin(RxDBLeaderElectionPlugin); // Add the leader election plugin
 
 // Define interfaces for Category and Group
 export interface Category {
@@ -62,18 +66,22 @@ let mcmDatabase: MiniatureDatabase | undefined;
 // Initialize database
 
 export async function initializeDatabase(): Promise<void> {
+    console.log("Initialize Database Called");
     mcmDatabase = await createRxDatabase<MiniatureDatabase>({
         name: 'stagingDatabase',
         storage: getRxStorageDexie(),
         eventReduce: true,
     });
+    console.log("Database Created");
 
     await createCollections();
+    console.log("Create Collections Returned");
 }
 
 // Database Creation Helper Function
 
 async function createCollections(): Promise<void> {
+    console.log("Create Collections Called");
     if (!mcmDatabase) throw new Error("Database is not initialized");
 
     await mcmDatabase.addCollections({
@@ -169,7 +177,7 @@ export async function checkInitialization(): Promise<boolean> {
 }
 
 // Initialize the database when this module is imported
-initializeDatabase();
+await initializeDatabase();
 
 // Export the functions for external use
 export default {
