@@ -1,6 +1,7 @@
 {
     "id": "generatedID",
     "name": "Group Name",
+    "description": "description",
     "metadata": {
         "created-at": "date",
         "updated-at": "date"

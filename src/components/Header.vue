@@ -14,10 +14,24 @@
             <v-app-bar-title style="margin-right: 1rem;">Miniature Collection Manager</v-app-bar-title>
         </template>
     </v-app-bar>
+    <v-app-bar :elevation="2">
+        <template v-slot="append">
+            <v-app-bar-title>{{ pageTitle }}</v-app-bar-title>
+        </template>
+    </v-app-bar>
 </template>
 
 <script lang="ts">
+    import { computed } from 'vue';
+    import { useRoute } from 'vue-router';
+
     export default {
+        setup() {
+            const route = useRoute();
+            const pageTitle = computed(() => route.name || 'Loading...');
+
+            return {pageTitle};
+        },
         data: () => ({
             items: [
             {
