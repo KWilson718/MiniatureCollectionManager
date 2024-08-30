@@ -29,8 +29,8 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { createCatSubmit } from '../../composables/formAssistants.ts';
-import { rules } from '../../modules/rules.ts';
+import { createCatSubmit } from '../../composables/formAssistants';
+import { rules } from '../../modules/rules';
 
 export default defineComponent({
     setup() {
@@ -39,13 +39,17 @@ export default defineComponent({
         const categoryDesc = ref('');
 
         const { submit } = createCatSubmit();
-
-        const handleSubmit = () => {
+        
+        const handleSubmit = async () => {
             if (valid.value) {
-                submit({
-                    categoryName: categoryName.value,
-                    categoryDesc: categoryDesc.value
-                });
+                try {
+                    await submit({
+                        categoryName: categoryName.value,
+                        categoryDesc: categoryDesc.value
+                    });
+                } catch (error) {
+                    console.error('Submission error:', error);
+                }
             }
         };
 
