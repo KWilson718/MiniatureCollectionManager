@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia';
 import { Category, Group, checkInitialization, getCategories, getGroups } from './dbController';
+import { generateItemsArray } from '../modules/generateItemsArray.ts';
+
 
 interface State {
   dbInit: boolean;
@@ -37,6 +39,22 @@ export const useStore = defineStore('collectionStore', {
       }
       catch(error) {
         console.error('Error during data loading:', error);
+      }
+    },
+
+    async generateItemsArray(type: number) {
+      try{
+        if(!this.dbInit){
+          this.loadData();
+        }
+
+        switch(type){
+          case 0:
+            return await generateItemsArray(this.dbCategories);          
+        }
+      }
+      catch(error){
+        console.error("Error Generating Items:", error);
       }
     }
   },
