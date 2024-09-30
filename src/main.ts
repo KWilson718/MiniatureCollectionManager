@@ -15,6 +15,10 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
+// MDI
+import '@mdi/font/css/materialdesignicons.css'; // Ensure MDI icons are imported
+import { mdi } from 'vuetify/iconsets/mdi'; // Import MDI icons
+
 const vuetify = createVuetify({
   components,
   directives,
@@ -23,6 +27,12 @@ const vuetify = createVuetify({
     themes:{
       // Can add in themes here generated in the format from https://vuetifyjs.com/en/features/theme/#javascript
     }
+  },
+  icons: {
+    defaultSet: 'mdi',
+    sets: {
+      mdi,
+    },
   },
 })
 
