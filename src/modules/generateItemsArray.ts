@@ -6,12 +6,14 @@ export async function generateItemsArray(entityGroup: Array<any>){
         let item = {
             key: entity.id,
             title: entity.name,
+            itemType: "category",
         };
         items.push(item);
         items.push(
             {
                 type: "divider",
-                inset: false
+                inset: false,
+                itemType: "divider",
             }
         );
     }
