@@ -9,13 +9,6 @@ export async function generateItemsArray(entityGroup: Array<any>){
             itemType: "category",
         };
         items.push(item);
-        items.push(
-            {
-                type: "divider",
-                inset: false,
-                itemType: "divider",
-            }
-        );
     }
 
     return items;
