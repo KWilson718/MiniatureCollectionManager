@@ -4,12 +4,15 @@
     <h3>The Current Selected Category is</h3>
 </template>
 
-<script>
+<script setup>
 
 import { onMounted, watch } from 'vue';
 import { useStore } from '../../lib/store'; // Adjust the import path as needed
+import { useRoute, useRouter } from 'vue-router'; // Import useRoute to watch route changes
 
 const store = useStore();
+const route = useRoute();
+const router = useRouter();
 
 const loadData = async () => {
   try {
@@ -19,24 +22,25 @@ const loadData = async () => {
   }
 };
 
+const loadCategory = async () => {
+    try {
+        await store.loadCollectionData(1, [route.params.id]);
+    }
+    catch (error){
+        console.error("Error during the category document", error);
+    }
+}
+
 // Load data when the component is mounted
 onMounted(() => {
   loadData();
+  loadCategory();
+  console.log("The Current Route Parameter is: ", route.params.id);
 });
 
 // Watch for route changes and reload data if necessary
 watch(route, () => {
   loadData();
 });
-
-// import dbController from '../../lib/dbController';
-
-// export default {
-//     computed: {
-//         async categoryID() {
-//             return await dbController.getCategory(this.$router.params.id);
-//         }
-//     }
-// }
 
 </script>

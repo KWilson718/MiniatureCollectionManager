@@ -70,7 +70,6 @@ watch(route, () => {
 // Navigate to the category page
 const navigateToCategory = (categoryId) => {
   router.push(`/category-read/${categoryId}`);
-  console.log(`Navigating to: ${categoryId}`);
 };
 
 // Edit category handler

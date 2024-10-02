@@ -9,6 +9,11 @@ const routes = [
     component: CategoryList,
   },
   {
+    path: '/category-read/',
+    name: 'Category Read W/O Parameter',
+    component: () => import('../pages/Category/CategoryRead.vue' as any), // lazy-loaded for fast response time
+  },
+  {
     path: '/category-read/:id',
     name: 'Category Read',
     component: () => import('../pages/Category/CategoryRead.vue' as any), // lazy-loaded for fast response time
