@@ -42,7 +42,7 @@
             {
                 title: 'Category Read',
                 disabled: false,
-                to: '/category-read',
+                to: '/category-read/error',
             },
             {
                 title: 'SubCategory Read',

@@ -32,6 +32,8 @@ export const useStore = defineStore('collectionStore', {
         await this.initializeDatabase();
         const categories = await getCategories();
         const groups = await getGroups();
+        console.log("Categories Are: ", categories);
+        console.log("Groups Are: ", groups);
 
         // Map RxDocuments to plain objects or simplified types
         this.dbCategories = categories.map(cat => cat.toJSON());
