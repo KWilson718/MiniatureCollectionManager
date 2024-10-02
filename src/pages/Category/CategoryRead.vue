@@ -1,10 +1,18 @@
 <template>
-    <v-sheet class="mx-auto" height="90%" width="50%">
-        <br>
-        <h1>{{ item?.name || 'Category Name' }}</h1>
-        <br>
-        <v-divider></v-divider>
+    <v-app-bar>
+        <template v-slot:prepend>
+            <v-btn :disabled="!item?.id" @click="editCategory(item?.id)">Edit Category</v-btn>
+        </template>
 
+        <v-app-bar-title>{{ item?.name || 'Category Name' }}</v-app-bar-title>
+
+        <template v-slot:append>
+            <v-btn>Create SubCategory</v-btn>
+        </template>
+    </v-app-bar>
+
+    <v-sheet class="mx-auto" height="90%" width="50%">
+        
     </v-sheet>
 </template>
 
@@ -22,8 +30,14 @@ const item = ref(null);
 const loadCategory = async () => {
     try {
         await store.loadCollectionData(1, [route.params.id]);
-        item.value = store.responsiveDbCategories[0];
-        console.log("Item is set to: ", item.value.name);
+        const category = store.responsiveDbCategories[0];
+        if (category) {
+            // Manually assign properties to ensure reactivity
+            item.value = {
+                ...category // Spread properties from the loaded category
+            };
+        }
+        console.log("Item is set to: ", item.value);
     }
     catch (error){
         console.error("Error during the category document", error);
@@ -40,4 +54,12 @@ watch(route, () => {
     loadCategory();
 });
 
+// Edit category handler
+const editCategory = (categoryId) => {
+  if (categoryId) {
+    router.push(`/category-edit/${categoryId}`);
+  } else {
+    console.error("Invalid Category ID");
+  }
+};
 </script>
