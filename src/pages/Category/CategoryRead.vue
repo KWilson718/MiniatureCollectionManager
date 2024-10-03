@@ -7,12 +7,12 @@
         <v-app-bar-title>{{ item?.name || 'Category Name' }}</v-app-bar-title>
 
         <template v-slot:append>
-            <v-btn>Create SubCategory</v-btn>
+            <v-btn :disabled="!item?.id" @click="createSubCategory(item?.id)">Create SubCategory</v-btn>
         </template>
     </v-app-bar>
 
     <v-sheet class="mx-auto" height="90%" width="50%">
-        
+
     </v-sheet>
 </template>
 
@@ -46,7 +46,7 @@ const loadCategory = async () => {
 
 // Load data when the component is mounted
 onMounted(() => {
-  loadCategory();
+    loadCategory();
 });
 
 // Watch for route changes and reload data if necessary
@@ -56,10 +56,20 @@ watch(route, () => {
 
 // Edit category handler
 const editCategory = (categoryId) => {
-  if (categoryId) {
-    router.push(`/category-edit/${categoryId}`);
-  } else {
-    console.error("Invalid Category ID");
-  }
+    if (categoryId) {
+        router.push(`/category-edit/${categoryId}`);
+    } 
+    else {
+        console.error("Invalid Category ID");
+    }
 };
+
+const createSubCategory = (categoryId) => {
+    if(categoryId) {
+        router.push(`/subcategory-create/${categoryId}`);
+    }
+    else {
+        console.error("Invalid Category ID");
+    }
+}
 </script>

@@ -27,41 +27,33 @@
     </v-card>
 </template>
 
-<script lang="ts">
+<script setup>
 import { defineComponent, ref } from 'vue';
 import { createCatSubmit } from '../../composables/formAssistants';
 import { rules } from '../../modules/rules';
+import { getPreviousRoute } from '../../lib/router';
+import { useRouter } from 'vue-router';
 
-export default defineComponent({
-    setup() {
-        const valid = ref(false);
-        const categoryName = ref('');
-        const categoryDesc = ref('');
+const valid = ref(false);
+const categoryName = ref('');
+const categoryDesc = ref('');
+const router = useRouter();
 
-        const { submit } = createCatSubmit();
-        
-        const handleSubmit = async () => {
-            if (valid.value) {
-                try {
-                    await submit({
-                        categoryName: categoryName.value,
-                        categoryDesc: categoryDesc.value
-                    });
-                } catch (error) {
-                    console.error('Submission error:', error);
-                }
-            }
-        };
+const { submit } = createCatSubmit();
 
-        return {
-            valid,
-            categoryName,
-            categoryDesc,
-            handleSubmit,
-            rules,
-        };
-    },
-});
+const handleSubmit = async () => {
+    if (valid.value) {
+        try {
+            await submit({
+                categoryName: categoryName.value,
+                categoryDesc: categoryDesc.value
+            });
+            router.push(getPreviousRoute());
+        } catch (error) {
+            console.error('Submission error:', error);
+        }
+    }
+};
 </script>
 
 <style scoped>

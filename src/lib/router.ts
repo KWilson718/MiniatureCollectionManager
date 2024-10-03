@@ -9,11 +9,6 @@ const routes = [
     component: CategoryList,
   },
   {
-    path: '/category-read/',
-    name: 'Category Read W/O Parameter',
-    component: () => import('../pages/Category/CategoryRead.vue' as any), // lazy-loaded for fast response time
-  },
-  {
     path: '/category-read/:id',
     name: 'Category Read',
     component: () => import('../pages/Category/CategoryRead.vue' as any), // lazy-loaded for fast response time
@@ -24,7 +19,7 @@ const routes = [
     component: () => import('../pages/Category/CategoryEdit.vue' as any), // lazy-loaded for fast response time
   },
   {
-    path: '/category-create/:id',
+    path: '/category-create',
     name: 'Category Create',
     component: () => import('../pages/Category/CategoryCreate.vue' as any), // lazy-loaded for fast response time
   },
@@ -80,6 +75,8 @@ const routes = [
   },
 ];
 
+let previousRoute: any = null;
+
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
@@ -88,8 +85,14 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   console.log('Navigating to:', to.fullPath); // The new route
   console.log('Coming from:', from.fullPath); // The current route
-  // Perform actions before loading the route (e.g., fetching data)
+
+  previousRoute = from;
+
   next(); // Always call next() to proceed with navigation
 });
+
+export function getPreviousRoute(){
+  return previousRoute;
+}
 
 export default router;
