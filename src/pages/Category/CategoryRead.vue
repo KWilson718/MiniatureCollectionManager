@@ -15,6 +15,8 @@
         <br>
         <p>{{ item?.description || "No Description Provided" }}</p>
         <br>
+
+
     </v-sheet>
 </template>
 
@@ -28,6 +30,7 @@ const store = useStore();
 const route = useRoute();
 const router = useRouter();
 const item = ref(null);
+const subItem = ref(null);
 
 const loadCategory = async () => {
     try {
@@ -38,7 +41,9 @@ const loadCategory = async () => {
             item.value = {
                 ...category // Spread properties from the loaded category
             };
-            console.log(item.value?.description);
+            subItem.value = item?.subcategories;
+            console.log(item.value);
+            console.log(subItem.value);
         }
         console.log("Item is set to: ", item.value);
     }

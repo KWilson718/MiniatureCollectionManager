@@ -14,7 +14,7 @@ export interface Category {
     name: string;
     description: string;
     metadata: object;
-    subcategories: object;
+    subCategories: object;
 }
 
 export interface Group {
@@ -22,7 +22,7 @@ export interface Group {
     name: string;
     description: string;
     metadata: object;
-    subcategories: object;
+    subCategories: object;
 }
 
 // Category and Group schemas

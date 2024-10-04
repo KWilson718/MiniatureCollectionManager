@@ -20,7 +20,7 @@ export function createCatSubmit() {
                 name: data.categoryName,
                 description: data?.categoryDesc,
                 metadata: metadata,
-                subcategories: [],
+                subCategories: [],
             }
 
             let insertion = await insertCategory(payload);
@@ -37,55 +37,53 @@ export function createCatSubmit() {
     };
 }
 
-export function  createSubCatSubmit(){
+export function createSubCatSubmit() {
     const submitSubCat = async (data: any, categoryID: any) => {
-        try{
-            const category = await getCategory(categoryID);
-
-            console.log("Data is set to:", data);
-            console.log("Category is set to:", category);
-
-            const randomID = await generateID();
-
-            const now = new Date();
-
-            const metadata = {
-                createdAt: now.toLocaleString(),
-                updatedAt: now.toLocaleString(),
-            }
-
-            const updatedMetadata = {
-                updatedAt: now.toLocaleString(),
-            }
-
-            let subCatPayload: any = {
-                id: randomID,
-                name: data.subCategoryName,
-                description: data?.subCategoryDesc,
-                metadata: metadata,
-                groups: [],
-
-            }
-
-            // Takes the previous Sub Categories and adds them to the current ones.
-            let subCategoriesArray = category?.subcategories || []; // needs to account for when there is no subcategories present
-            subCategoriesArray.push(subCatPayload);
-
-            let categoryShell: any = {
-                metadata: updatedMetadata,
-                subCategories: subCategoriesArray,
-            }
-
-            let result = await updateCategory(category.id, categoryShell);
-
-            console.log(result);
-        }
-        catch (error) {
-            console.error('Error during SubCategory Creation', error);
-        }
-    }
-
+      try {
+        const category = await getCategory(categoryID);
+  
+        console.log("Data is set to:", data);
+        console.log("Category is set to:", category);
+  
+        const randomID = await generateID();
+  
+        const now = new Date();
+  
+        const metadata = {
+          createdAt: now.toLocaleString(),
+          updatedAt: now.toLocaleString(),
+        };
+  
+        const updatedMetadata = {
+          updatedAt: now.toLocaleString(),
+        };
+  
+        let subCatPayload: any = {
+          id: randomID,
+          name: data.subCategoryName,
+          description: data?.subCategoryDesc,
+          metadata: metadata,
+          groups: [],
+        };
+  
+        // Access subCategories (correct casing) or set to an empty array if not present
+        let subCategoriesArray = category?.subCategories || [];
+        subCategoriesArray.push(subCatPayload); // Push new subcategory to the array, though throwing errors
+  
+        let categoryShell: any = {
+          metadata: updatedMetadata,
+          subCategories: subCategoriesArray, // Update subCategories, with the correct property name
+        };
+  
+        let result = await updateCategory(category.id, categoryShell);
+  
+        console.log(result);
+      } catch (error) {
+        console.error("Error during SubCategory Creation", error);
+      }
+    };
+  
     return {
-        submitSubCat
-    }
+      submitSubCat,
+    };
 }

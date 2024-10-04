@@ -46,8 +46,8 @@ const handleSubmit = async () => {
     if (valid.value) {
         try {
             await submitSubCat({
-                subcategoryName: subcategoryName.value,
-                subcategoryDesc: subcategoryDesc.value
+                subCategoryName: subcategoryName.value,
+                subCategoryDesc: subcategoryDesc.value
             }, route.params.id);
             router.push(getPreviousRoute());
         } catch (error) {
