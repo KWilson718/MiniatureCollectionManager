@@ -116,6 +116,8 @@ export async function patchDocument(document: RxDocument, changes: object): Prom
     }
 }
 
+// Getters
+
 export async function getCategories(): Promise<RxDocument<Category>[]> {
     if (!mcmDatabase) throw new Error("Database is not initialized");
 
@@ -123,7 +125,17 @@ export async function getCategories(): Promise<RxDocument<Category>[]> {
     return categories as RxDocument<Category>[]; // Ensure proper typing
 }
 
-// Fetch Groups with explicit typing
+export async function getCategory(id: string): Promise<RxDocument<Category>> {
+    if (!mcmDatabase) throw new Error("Database is not initialized");
+
+    const category = await mcmDatabase.categories.findOne({
+        selector: {
+            id: id,
+        }
+    }).exec();
+    return category as unknown as RxDocument<Category>;
+}
+
 export async function getGroups(): Promise<RxDocument<Group>[]> {
     if (!mcmDatabase) throw new Error("Database is not initialized");
 
@@ -182,6 +194,7 @@ export default {
     insertGroup,
     patchDocument,
     getCategories,
+    getCategory,
     getGroups,
     deleteDocument,
     checkInitialization,
