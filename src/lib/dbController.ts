@@ -145,7 +145,7 @@ export async function getGroups(): Promise<RxDocument<Group>[]> {
 
 // Delete'er
 
-export async function deleteDocument(document: RxDocument): Promise<boolean>{
+export async function deleteDocument(document: RxDocument<any>): Promise<boolean>{
     try{
         document.remove();
         return cleanupDB();

@@ -78,8 +78,11 @@ const editCategory = (categoryId) => {
   router.push(`/category-edit/${categoryId}`);
 };
 
-const deleteCategory = (categoryId) => {
-  console.log(`Delete category with ID: ${categoryId}`);
+const deleteCategory = async (categoryId) => {
+  await store.deleteCategory(categoryId);
+  
+  // Remove the deleted category from the items array without reloading the whole data
+  items.value = items.value.filter(item => item.key !== categoryId);
 };
 
 </script>
