@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { Category, Group, checkInitialization, getCategories, getCategory, getGroups } from './dbController';
+import { Category, Group, checkInitialization, getCategories, getCategory, getGroups, deleteDocument } from './dbController';
 import { generateItemsArray } from '../modules/generateItemsArray.ts';
 
 
@@ -86,6 +86,34 @@ export const useStore = defineStore('collectionStore', {
       catch(error){
         console.error("Error Generating Items:", error);
       }
-    }
+    },
+
+    async deleteCategory(catID: string) {
+      try {
+        await this.initializeDatabase();
+        
+        // Fetch the category to be deleted
+        const categoryDoc = await getCategory(catID);
+
+        if (categoryDoc) {
+          // Delete the document
+          const deletionSuccess = await deleteDocument(categoryDoc);
+
+          if (deletionSuccess) {
+            // Remove the category from the store's state
+            this.dbCategories = this.dbCategories.filter(cat => cat.id !== catID);
+            console.log(`Category with ID ${catID} successfully deleted.`);
+            this.loadData();
+          } else {
+            console.error(`Failed to delete category with ID ${catID}.`);
+          }
+        } else {
+          console.error(`Category with ID ${catID} not found.`);
+        }
+      } catch (error) {
+        console.error("Error deleting category:", error);
+      }
+    },
+
   },
 });
