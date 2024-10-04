@@ -12,7 +12,9 @@
     </v-app-bar>
 
     <v-sheet class="mx-auto" height="90%" width="50%">
-
+        <br>
+        <p>{{ item?.description || "No Description Provided" }}</p>
+        <br>
     </v-sheet>
 </template>
 
@@ -36,6 +38,7 @@ const loadCategory = async () => {
             item.value = {
                 ...category // Spread properties from the loaded category
             };
+            console.log(item.value?.description);
         }
         console.log("Item is set to: ", item.value);
     }

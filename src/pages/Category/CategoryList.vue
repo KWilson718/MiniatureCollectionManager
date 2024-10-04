@@ -20,6 +20,8 @@
 
           <v-spacer></v-spacer>
 
+          <p>{{ item?.description || "No Description Provided" }}</p>
+
           <v-list-item-action>
             <v-btn icon @click.stop="editCategory(item.key)">
               <v-icon>mdi-pencil</v-icon>

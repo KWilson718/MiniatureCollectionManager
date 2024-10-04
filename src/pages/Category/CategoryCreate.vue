@@ -39,12 +39,12 @@ const categoryName = ref('');
 const categoryDesc = ref('');
 const router = useRouter();
 
-const { submit } = createCatSubmit();
+const { submitCat } = createCatSubmit();
 
 const handleSubmit = async () => {
     if (valid.value) {
         try {
-            await submit({
+            await submitCat({
                 categoryName: categoryName.value,
                 categoryDesc: categoryDesc.value
             });

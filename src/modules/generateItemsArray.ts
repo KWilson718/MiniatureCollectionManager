@@ -6,6 +6,7 @@ export async function generateItemsArray(entityGroup: Array<any>){
         let item = {
             key: entity.id,
             title: entity.name,
+            description: entity.description,
             itemType: "category",
         };
         items.push(item);

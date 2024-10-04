@@ -2,6 +2,7 @@ import { createRxDatabase, RxDatabase, RxCollection, RxDocument, isRxDatabase, a
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
 import { RxDBCleanupPlugin } from 'rxdb/plugins/cleanup';
 import { RxDBLeaderElectionPlugin } from 'rxdb/plugins/leader-election'; // Import the leader election plugin
+import { update } from 'rxdb/plugins/update';
 
 // Add plugins
 addRxPlugin(RxDBCleanupPlugin);
@@ -103,13 +104,27 @@ export async function insertGroup(group: Group): Promise<RxDocument<Group>> {
 
 // Mutator
 
-export async function patchDocument(document: RxDocument, changes: object): Promise<RxDocument>{
+export async function patchDocument(document: RxDocument<any>, changes: object): Promise<RxDocument>{
     if(!mcmDatabase) throw new Error("Database is not initialized, or loaded incorrectly");
 
     try{
         return await document.patch(
             changes
         );
+    }
+    catch(error){
+        throw new Error(JSON.stringify(error));
+    }
+}
+
+export async function updateCategory(documentID: string, changes: object){
+    if(!mcmDatabase) throw new Error("Database is not initialized, or loaded incorrectly");
+
+    try{
+        let oldCat = await getCategory(documentID);
+        let result = await patchDocument(oldCat, changes);
+
+        return result;
     }
     catch(error){
         throw new Error(JSON.stringify(error));
@@ -199,4 +214,5 @@ export default {
     deleteDocument,
     checkInitialization,
     cleanupDB,
+    updateCategory,
 };

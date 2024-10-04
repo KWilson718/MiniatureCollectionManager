@@ -9,14 +9,14 @@
         <v-card-text class="form-content">
             <v-form ref="form" v-model="valid" class="form">
                 <v-text-field
-                    v-model="categoryName"
+                    v-model="subcategoryName"
                     :rules="rules.required"
                     label="SubCategory Name"
                     class="my-2"
                 ></v-text-field>
 
                 <v-text-field
-                    v-model="categoryDesc"
+                    v-model="subcategoryDesc"
                     label="SubCategory Description"
                     class="my-2"
                 ></v-text-field>
@@ -29,25 +29,26 @@
 
 <script setup>
 import { defineComponent, ref } from 'vue';
-import { createCatSubmit } from '../../composables/formAssistants';
+import { createSubCatSubmit } from '../../composables/formAssistants';
 import { rules } from '../../modules/rules';
 import { getPreviousRoute } from '../../lib/router';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const valid = ref(false);
-const categoryName = ref('');
-const categoryDesc = ref('');
+const subcategoryName = ref('');
+const subcategoryDesc = ref('');
 const router = useRouter();
+const route = useRoute();
 
-const { submit } = createCatSubmit();
+const { submitSubCat } = createSubCatSubmit();
 
 const handleSubmit = async () => {
     if (valid.value) {
         try {
-            await submit({
-                categoryName: categoryName.value,
-                categoryDesc: categoryDesc.value
-            });
+            await submitSubCat({
+                subcategoryName: subcategoryName.value,
+                subcategoryDesc: subcategoryDesc.value
+            }, route.params.id);
             router.push(getPreviousRoute());
         } catch (error) {
             console.error('Submission error:', error);

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { Category, Group, checkInitialization, getCategories, getCategory, getGroups, deleteDocument } from './dbController';
+import { Category, Group, checkInitialization, getCategories, getCategory, getGroups, deleteDocument, patchDocument } from './dbController';
 import { generateItemsArray } from '../modules/generateItemsArray.ts';
 
 
