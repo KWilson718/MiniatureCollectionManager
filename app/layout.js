@@ -1,3 +1,5 @@
+import './globals.css'
+
 export const metadata = {
   title: "Miniature Collection Manager",
   description: "A Project to Track Tons of Models & Learn More About CRUD Applications",
