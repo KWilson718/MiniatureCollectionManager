@@ -1,15 +1,15 @@
-import './globals.css'
-
-export const metadata = {
-  title: "Miniature Collection Manager",
-  description: "A Project to Track Tons of Models & Learn More About CRUD Applications",
-};
+import React from 'react';
+import './globals.css';
+import CustomBreadcrumbs from '../components/ui/Breadcrumbs';
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="rootBody">
-        {children}
+    <html lang="en" className='root'>
+      <body className='rootBody'>
+        <header>
+          <CustomBreadcrumbs />
+        </header>
+        <main>{children}</main>
       </body>
     </html>
   );
