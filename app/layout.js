@@ -6,10 +6,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className='root'>
       <body className='rootBody'>
-        <header>
+        <header className='navHeader'>
           <CustomBreadcrumbs />
         </header>
-        <main>{children}</main>
+        <main className='mainApp'>{children}</main>
       </body>
     </html>
   );

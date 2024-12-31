@@ -15,4 +15,11 @@
     height: 100vh;
 }
 
+.navHeader {
+    min-height: 15vh;
+    padding-top: 2rem;
+}
 
+.mainApp {
+    min-height: 80vh;
+}
