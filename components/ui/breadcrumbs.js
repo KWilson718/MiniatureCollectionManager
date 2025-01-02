@@ -25,11 +25,8 @@ const CustomBreadcrumbs = () => {
       <Link
         onClick={() => handleClick('/')}
         sx={{
-          color: 'secondary.main', // Apply secondary color to links
+          color: 'secondary.contrastText', // Apply secondary color to links
           cursor: 'pointer',
-          '&:hover': {
-            color: 'secondary.light', // Hover effect
-          },
         }}
       >
         Home
@@ -51,11 +48,8 @@ const CustomBreadcrumbs = () => {
           <Link
             onClick={() => handleClick(href)}
             sx={{
-              color: 'secondary.main',
+              color: 'secondary.contrastText',
               cursor: 'pointer',
-              '&:hover': {
-                color: 'secondary.light',
-              },
             }}
             key={value}
           >

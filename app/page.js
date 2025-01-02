@@ -12,8 +12,6 @@ export default function Home() {
       sx={{
         m: 0,
         p: 0,
-        bgcolor: 'primary.main',
-        color: 'primary.contrastText',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
