@@ -2,7 +2,11 @@
 
 import { useRouter } from "next/navigation";
 
-import { Stack, Button, Box } from "@mui/material";
+import { Stack, Button, Box} from "@mui/material";
+
+import FilterListComponent from "@/components/filterList/filterListComponent";
+import data from '../../components/filterList/testData';
+
 
 
 export default function SelectMini() {
@@ -21,8 +25,7 @@ export default function SelectMini() {
         >
             <h1>Select a Faction to View Miniatures</h1>
             <p>Miniatures are filtered by Brand, then by Game, then by Faction</p>
-            <Stack spacing={1}>
-            </Stack>
+            <FilterListComponent items={data} />
         </Box>
     );
 }
