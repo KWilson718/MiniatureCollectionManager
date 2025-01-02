@@ -14,11 +14,23 @@ const CustomBreadcrumbs = () => {
   };
 
   return (
-    <Breadcrumbs aria-label="breadcrumb">
+    <Breadcrumbs
+      aria-label="breadcrumb"
+      sx={{
+        '& .MuiBreadcrumbs-separator': {
+          color: 'primary.main', // Separator color from theme
+        },
+      }}
+    >
       <Link
-        color="inherit"
         onClick={() => handleClick('/')}
-        sx={{ cursor: 'pointer' }}
+        sx={{
+          color: 'secondary.main', // Apply secondary color to links
+          cursor: 'pointer',
+          '&:hover': {
+            color: 'secondary.light', // Hover effect
+          },
+        }}
       >
         Home
       </Link>
@@ -27,14 +39,24 @@ const CustomBreadcrumbs = () => {
         const isLast = index === pathnames.length - 1;
 
         return isLast ? (
-          <Typography color="textPrimary" key={value}>
+          <Typography
+            key={value}
+            sx={{
+              color: 'primary.dark', // Apply dark primary color for the active breadcrumb
+            }}
+          >
             {formatLabel(value)}
           </Typography>
         ) : (
           <Link
-            color="inherit"
             onClick={() => handleClick(href)}
-            sx={{ cursor: 'pointer' }}
+            sx={{
+              color: 'secondary.main',
+              cursor: 'pointer',
+              '&:hover': {
+                color: 'secondary.light',
+              },
+            }}
             key={value}
           >
             {formatLabel(value)}
@@ -46,13 +68,13 @@ const CustomBreadcrumbs = () => {
 };
 
 const formatLabel = (value) => {
-    const labelMap = {
-        products: 'Products',
-        about: 'About Us',
-    };
+  const labelMap = {
+    selection: 'Find Miniature',
+    products: 'Products',
+    about: 'About Us',
+  };
 
-    return labelMap[value] || value.charAt(0).toUpperCase() + value.slice(1);
+  return labelMap[value] || value.charAt(0).toUpperCase() + value.slice(1);
 };
-  
 
 export default CustomBreadcrumbs;
