@@ -2,13 +2,15 @@
 
 import { useRouter } from "next/navigation";
 
-import Button from '@mui/material/Button';
+import { Box, Button } from '@mui/material';
 
 export default function Home() {
   const router = useRouter();
 
   return (
-    <div>
+    <Box
+
+    >
       <h1>Miniature Collection Manager</h1>
       <p>This should be a great way to track data about miniature collections</p>
       <Button
@@ -16,7 +18,8 @@ export default function Home() {
           router.push('/selection')
         }}
         variant="outline"
+        color="primary"
       >View Collection</Button>
-    </div>
+    </Box>
   );
 }
