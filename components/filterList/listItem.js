@@ -8,6 +8,9 @@ export default function ListItem({title}) {
         <Paper
             elevation={2}
             sx={{
+                display: "flex",
+                justifyContent: 'center',
+                alignItems: 'center',
                 padding: 2,
                 backgroundColor: theme.palette.secondary.main,
                 color: theme.palette.secondary.contrastText,

@@ -24,7 +24,7 @@ export default function Home() {
         onClick={() => {
           router.push('/selection')
         }}  
-        variant="outlined"
+        variant="contained"
         color="secondary"
       >View Collection</Button>
     </Box>

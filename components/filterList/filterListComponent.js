@@ -11,6 +11,9 @@ export default function FilterListComponent({ items }) {
         <Stack
             spacing={1}
             divider={<Divider orientation="vertical" flexItem />}
+            sx={{
+                width: 1/2
+            }}
         >
             {items.map((item) => (
                 <ListItem key={item.id} title={item.title} />
