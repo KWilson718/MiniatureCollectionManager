@@ -1,6 +1,7 @@
 'use client'
 
-import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useRouter} from "next/navigation";
 
 import { Stack, Button, Box, Paper, useTheme, Typography} from "@mui/material";
 
@@ -10,6 +11,16 @@ import data from '../../components/filterList/testData';
 
 
 export default function SelectMini() {
+    async function fetchItems() {
+        const response = await fetch('/api/database');
+        const data = await response.json();
+        console.log(data);
+    }
+
+    useEffect(() => {
+        fetchItems();
+    }, []);
+
     const theme = useTheme();
 
     const router = useRouter();
