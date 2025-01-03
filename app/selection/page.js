@@ -36,6 +36,9 @@ export default function SelectMini() {
                 }}
                 color="secondary"
                 variant="contained"
+                onClick={() => {
+                    console.log("Create Brand Button Clicked!");
+                }}
             >
                 <Typography variant="h4">Create Brand</Typography>
             </Button>
