@@ -87,7 +87,7 @@ export default function FilterListComponent() {
                     setBrandDialogOpen(true);
                 }}
             >
-                <Typography variant="h4">Create Brand</Typography>
+                <Typography variant="h4">Add Brand</Typography>
             </Button>
 
             <Dialog 
