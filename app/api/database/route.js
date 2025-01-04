@@ -85,7 +85,7 @@ export async function POST(req) {
     const { type, data } = await req.json();
 
     console.log('Type Set to: ', type);
-    console.log('Data Set to: ', data);
+    // console.log('Data Set to: ', data);
     // console.log('Request Set To: ', req);
     
 
@@ -95,6 +95,7 @@ export async function POST(req) {
         case 'Game':
             return await addGame(db, data);
         default:
+            console.log('A Type of: ', type, ' was recieved and is being rejected');
             return new Promise((resolve, reject) => {
                 reject(
                     new Response(
