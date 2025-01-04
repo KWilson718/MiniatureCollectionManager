@@ -1,7 +1,7 @@
 import React from "react";
 import { Paper, Typography, useTheme } from "@mui/material";
 
-export default function ListItem({title}) {
+export default function ListItem({title, description}) {
     const theme = useTheme();
 
     return (
@@ -9,6 +9,7 @@ export default function ListItem({title}) {
             elevation={2}
             sx={{
                 display: "flex",
+                flexDirection: 'column',
                 justifyContent: 'center',
                 alignItems: 'center',
                 padding: 2,
@@ -17,6 +18,7 @@ export default function ListItem({title}) {
             }}
         >
             <Typography variant="h4">{title}</Typography>
+            <Typography variant="p" sx={{paddingTop: .75}}>{description}</Typography>
         </Paper>
     );
 }
