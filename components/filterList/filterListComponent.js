@@ -16,8 +16,11 @@ export default function FilterListComponent() {
     const router = useRouter();
 
     async function fetchItems() {
-        const response = await fetch('/api/database');
+        const response = await fetch('/api/database?type=brand');
         const data = await response.json();
+        if (data.error) {
+            throw new Error(data.error);
+        }
         setBrandData(data);
     }
 
@@ -44,6 +47,8 @@ export default function FilterListComponent() {
             if (response.ok) {
                 console.log('Brand Successfully Added!');
                 fetchItems();
+                setBrandName('');
+                setBrandDescription('');
             }
             else {
                 console.error('Failed to add brand.');
@@ -71,7 +76,7 @@ export default function FilterListComponent() {
                 }}
             >
                 {brandData.map((brand) => (
-                    <ListItem key={brand.id} title={brand.brandName} description={brand.brandDescription} />
+                    <ListItem key={brand.id} brandID={brand.id} title={brand.brandName} description={brand.brandDescription} />
                 ))}
             </Stack>
             <Button
