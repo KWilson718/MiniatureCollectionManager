@@ -6,7 +6,6 @@ import { useRouter} from "next/navigation";
 import { Box, Button, TextField, Typography, Dialog, DialogTitle, DialogContent, DialogActions, useTheme } from "@mui/material";
 
 import FilterListComponent from "@/components/filterList/filterListComponent";
-import data from '../../components/filterList/testData';
 
 
 
@@ -27,7 +26,7 @@ export default function SelectMini() {
             <p>Miniatures are filtered by Brand, then by Game, then by Faction</p>
 
             
-            <FilterListComponent items={data} />
+            <FilterListComponent />
         </Box>
     );
 }

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useRouter} from "next/navigation";
 
-import { Stack, Divider, Box, Button, TextField, Typography, Dialog, DialogTitle, DialogContent, DialogActions, useTheme } from "@mui/material";
+import { Stack, Divider, Button, TextField, Typography, Dialog, DialogTitle, DialogContent, DialogActions, useTheme } from "@mui/material";
 import ListItem from "./listItem";
 
-export default function FilterListComponent({ items }) {
+export default function FilterListComponent() {
     const [brandDialogOpen, setBrandDialogOpen] = useState(false);
     const [brandName, setBrandName] = useState('');
     const [brandDescription, setBrandDescription] = useState('');
@@ -56,15 +56,13 @@ export default function FilterListComponent({ items }) {
         setBrandDialogOpen(false);
     }
 
-    if (!Array.isArray(items)) {
-        console.log("Items Set to ", items);
-        return <div>No items available</div>; // or some fallback UI
+    if (!Array.isArray(brandData)) {
+        console.log("Brands Set to ", brandData);
+        return <div>No Brands Available</div>; // or some fallback UI
     }
 
     return (
         <>
-            <p>Current List of Brands from Database Here</p>
-            <Typography variant="body1">{JSON.stringify(brandData, null, 2)}</Typography>
             <Stack
                 spacing={1}
                 divider={<Divider orientation="vertical" flexItem />}
@@ -72,8 +70,8 @@ export default function FilterListComponent({ items }) {
                     width: 1/2
                 }}
             >
-                {items.map((item) => (
-                    <ListItem key={item.id} title={item.title} />
+                {brandData.map((brand) => (
+                    <ListItem key={brand.id} title={brand.brandName} description={brand.brandDescription} />
                 ))}
             </Stack>
             <Button

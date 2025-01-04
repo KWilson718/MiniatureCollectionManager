@@ -2,6 +2,7 @@ const data = [
     { 
         id: 1, 
         title: 'Games Workshop',
+        description: 'The Pinnacle of Wargame Miniatures',
         games: [
             {
                 title: 'Warhammer 40k',
@@ -37,10 +38,10 @@ const data = [
             }
         ]
     },
-    { id: 2, title: 'Atomic Mass Games'},
-    { id: 3, title: 'Warlord Games'},
-    { id: 4, title: 'Wargames Atlantic'},
-    { id: 5, title: 'Modiphius' }
+    { id: 2, title: 'Atomic Mass Games', description: 'Popular for Wargames Set in IPs like Marvel & Star Wars'},
+    { id: 3, title: 'Warlord Games', description: 'Well known for Historical Wargames like Bolt Action'},
+    { id: 4, title: 'Wargames Atlantic', description: 'Popular for various budget friendly mass troop boxes'},
+    { id: 5, title: 'Modiphius', description: 'Known for IP based games in the Fallout & Dune worlds'}
 ];
 
 export default data;
