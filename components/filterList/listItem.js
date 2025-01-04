@@ -128,7 +128,9 @@ export default function ListItem({brandID, title, description}) {
                         }}
                     >
                         <Typography variant="h4">{title}</Typography>
-                        <Typography variant="p" sx={{paddingTop: .75}}>{description}</Typography>
+                        {description ? (
+                            <Typography variant="p" sx={{paddingTop: .75}}>{description}</Typography>
+                        ):(<></>)}
                     </Box>
                     <Box
                         sx={{
