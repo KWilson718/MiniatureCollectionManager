@@ -18,19 +18,22 @@ export async function GET (req) {
             case 'brand':
                 query = `SELECT * FROM brands`;
                 break;
-            query = `SELECT * FROM games`;
+            case 'game':
+                query = `SELECT * FROM games`;
                 if(brandID){
                     query += ` WHERE brandID = ?`;
                     queryParams.push(brandID);
                 }
                 break;
-            query = `SELECT * FROM factions`;
+            case 'faction':
+                query = `SELECT * FROM factions`;
                 if(gameID){
                     query += ` WHERE gameID = ?`;
                     queryParams.push(gameID);
                 }
                 break;
-            query = `SELECT * FROM miniatures`;
+            case 'miniature':
+                query = `SELECT * FROM miniatures`;
                 if(factionID){
                     query += ` WHERE factionID = ?`;
                     queryParams.push(factionID);
@@ -45,6 +48,15 @@ export async function GET (req) {
                         {status: 400}
                     )
                 )
+        }
+
+        if (!query) {
+            return reject(
+                new Response(
+                    JSON.stringify({ error: "Query is not defined." }),
+                    { status: 500 }
+                )
+            );
         }
 
 
