@@ -11,8 +11,6 @@ export async function GET (req) {
         const gameID = params.get("gameID");
         const factionID = params.get("factionID");
 
-        // console.log("Recieved following Params", url, params);
-
         let query;
         let queryParams = [];
 
@@ -85,8 +83,6 @@ export async function POST(req) {
     const { type, data } = await req.json();
 
     console.log('Type Set to: ', type);
-    // console.log('Data Set to: ', data);
-    // console.log('Request Set To: ', req);
     
 
     switch (type) {
