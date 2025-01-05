@@ -6,7 +6,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 
-export default function ListItem({brandID, title, description}) {
+export default function Brand({brandID, title, description}) {
     const [selected, setSelected] = React.useState(false);
 
     const [gameDialogOpen, setGameDialogOpen] = useState(false);

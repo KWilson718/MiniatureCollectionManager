@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useRouter} from "next/navigation";
 
 import { Stack, Divider, Button, TextField, Typography, Dialog, DialogTitle, DialogContent, DialogActions, useTheme } from "@mui/material";
-import ListItem from "./brand";
+import Brand from "./brand";
 
-export default function FilterListComponent() {
+export default function BrandListComponent() {
     const [brandDialogOpen, setBrandDialogOpen] = useState(false);
     const [brandName, setBrandName] = useState('');
     const [brandDescription, setBrandDescription] = useState('');
@@ -76,7 +76,7 @@ export default function FilterListComponent() {
                 }}
             >
                 {brandData.map((brand) => (
-                    <ListItem key={brand.id} brandID={brand.id} title={brand.brandName} description={brand.brandDescription} />
+                    <Brand key={brand.id} brandID={brand.id} title={brand.brandName} description={brand.brandDescription} />
                 ))}
             </Stack>
             <Button
