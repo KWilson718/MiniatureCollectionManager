@@ -95,7 +95,7 @@ export default function Brand({brandID, title, description}) {
                             alignItems: 'center',
                         }}
                     >
-                        <GameListComponent />
+                        <GameListComponent brandID={brandID} />
                     </Box>           
                 
                 ) : (<></>)} 
