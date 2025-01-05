@@ -5,7 +5,7 @@ import { useRouter} from "next/navigation";
 
 import { Box, Button, TextField, Typography, Dialog, DialogTitle, DialogContent, DialogActions, useTheme } from "@mui/material";
 
-import FilterListComponent from "@/components/filterList/filterListComponent";
+import FilterListComponent from "@/components/brandListing/brandList";
 
 
 
