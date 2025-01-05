@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter} from "next/navigation";
 
 import { Stack, Divider, Button, TextField, Typography, Dialog, DialogTitle, DialogContent, DialogActions, useTheme } from "@mui/material";
-import ListItem from "./listItem";
+import ListItem from "./brand";
 
 export default function FilterListComponent() {
     const [brandDialogOpen, setBrandDialogOpen] = useState(false);
