@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Paper, Typography, useTheme, Box, ToggleButton, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 
 export default function Brand({brandID, title, description}) {
@@ -147,9 +147,9 @@ export default function Brand({brandID, title, description}) {
                             onChange={() => setSelected((prevSelected) => !prevSelected)}
                         >
                             {selected ? 
-                                <KeyboardArrowUpIcon sx={{ color: theme.palette.secondary.contrastText, fontSize: "3rem" }} /> 
+                                <KeyboardArrowDownIcon sx={{ color: theme.palette.secondary.contrastText, fontSize: "3rem" }} /> 
                                 : 
-                                <KeyboardArrowDownIcon sx={{ color: theme.palette.secondary.contrastText, fontSize: "3rem" }} />
+                                <KeyboardArrowRightIcon sx={{ color: theme.palette.secondary.contrastText, fontSize: "3rem" }} />
                             }
                         </ToggleButton>
                     </Box>
@@ -168,7 +168,7 @@ export default function Brand({brandID, title, description}) {
                             color="primary"
                             sx={{
                                 marginTop: 2,
-                                padding: 2,
+                                padding: 1,
                             }}
                             onClick={() => {
                                 console.log('Add Game Button Clicked');
