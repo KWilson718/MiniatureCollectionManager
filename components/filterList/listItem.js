@@ -164,8 +164,8 @@ export default function ListItem({brandID, title, description}) {
                         }}
                     >
                         <Button
-                            variant="outlined"
-                            color="secondary"
+                            variant="contained"
+                            color="primary"
                             sx={{
                                 marginTop: 2,
                                 padding: 2,
