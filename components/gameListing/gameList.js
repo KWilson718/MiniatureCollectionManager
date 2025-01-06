@@ -75,7 +75,6 @@ export default function GameListComponent({brandID}) {
 
     return (
         <>
-            <Typography variant="p">{JSON.stringify(gameData)}</Typography>
             <Button
                 variant="contained"
                 color="primary"
