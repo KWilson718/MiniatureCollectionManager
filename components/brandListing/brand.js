@@ -59,6 +59,7 @@ export default function Brand({brandID, title, description}) {
                             alignItems: 'center',
                         }}
                     >
+                        <Typography variant="p">{brandID}</Typography>
                         <Typography variant="h4">{title}</Typography>
                         {description ? (
                             <Typography variant="p" sx={{paddingTop: .75}}>{description}</Typography>

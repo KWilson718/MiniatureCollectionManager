@@ -21,6 +21,9 @@ export async function GET (req) {
             case 'game':
                 query = `SELECT * FROM games`;
                 if(brandID){
+                    console.log('CURRENT VALUE OF brandID: ', brandID);
+                }
+                if(brandID){
                     query += ` WHERE brandID = ?`;
                     queryParams.push(brandID);
                 }

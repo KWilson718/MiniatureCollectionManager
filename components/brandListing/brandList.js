@@ -62,7 +62,6 @@ export default function BrandListComponent() {
     }
 
     if (!Array.isArray(brandData)) {
-        console.log("Brands Set to ", brandData);
         return <div>No Brands Available</div>; // or some fallback UI
     }
 

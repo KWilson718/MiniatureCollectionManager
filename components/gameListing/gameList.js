@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Typography, useTheme, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
 
-export default function GameListComponent(brandID) {
+export default function GameListComponent({brandID}) {
     const [gameDialogOpen, setGameDialogOpen] = useState(false);
     const [gameName, setGameName] = useState('');
     const [gameDescription, setGameDescription] = useState('');
@@ -16,7 +16,7 @@ export default function GameListComponent(brandID) {
 
     const fetchGames = useCallback(async () => {
         try {
-            const response = await fetch(`api/database?type=faction&brandID=${brandID}`);
+            const response = await fetch(`/api/database?type=game&brandID=${brandID}`);
             if (!response.ok) {
                 throw new Error(`API Error: ${response.status} ${response.statusText}`);
             }
@@ -75,6 +75,7 @@ export default function GameListComponent(brandID) {
 
     return (
         <>
+            <Typography variant="p">{JSON.stringify(gameData)}</Typography>
             <Button
                 variant="contained"
                 color="primary"
