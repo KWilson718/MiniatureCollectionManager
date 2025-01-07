@@ -42,7 +42,6 @@ export default function FactionListComponent({gameID}) {
 
     const handleFactionDialogSubmit = async () => {
         try{
-            console.log(`Handling the Following Request:\nGameID - ${gameID}\nFactionName - ${factionName}\nFactionDescription - ${factionDescription}`);
             const response = await fetch('api/database', {
                 method: 'POST',
                 headers: {
