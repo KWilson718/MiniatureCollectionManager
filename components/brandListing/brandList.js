@@ -62,7 +62,7 @@ export default function BrandListComponent() {
     }
 
     if (!Array.isArray(brandData)) {
-        return <div>No Brands Available</div>; // or some fallback UI
+        return <div><h1>Loading Brands</h1></div>;
     }
 
     return (

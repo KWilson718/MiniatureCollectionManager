@@ -75,7 +75,7 @@ export default function GameListComponent({brandID}) {
     };
 
     if (!Array.isArray(gameData)) {
-        return <div>No Games Available</div>; // or some fallback UI
+        return <div><h1>Loading Games</h1></div>;
     }
 
     return (
