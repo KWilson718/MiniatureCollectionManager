@@ -71,7 +71,8 @@ export default function BrandListComponent() {
                 spacing={1}
                 divider={<Divider orientation="vertical" flexItem />}
                 sx={{
-                    width: 1/2
+                    width: 3/5,
+                    marginTop: 1,
                 }}
             >
                 {brandData.map((brand) => (
@@ -81,8 +82,8 @@ export default function BrandListComponent() {
             <Button
                 sx={{
                     width: 1/2,
-                    marginTop: 2,
-                    padding: 2
+                    marginTop: 4,
+                    padding: 2,
                 }}
                 color="secondary"
                 variant="contained"

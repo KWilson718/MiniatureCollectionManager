@@ -84,7 +84,8 @@ export default function GameListComponent({brandID}) {
                 spacing={1}
                 divider={<Divider orientation="vertical" flexItem />}
                 sx={{
-                    width: 4/5
+                    width: 7/8,
+                    marginTop: 1,
                 }}
             >
                 {gameData.map((game) => (
@@ -96,7 +97,7 @@ export default function GameListComponent({brandID}) {
                 color="primary"
                 sx={{
                     width: 1/2,
-                    marginTop: 2,
+                    marginTop: 4,
                     padding: 1,
                 }}
                 onClick={() => {

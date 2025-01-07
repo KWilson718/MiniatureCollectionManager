@@ -14,7 +14,6 @@ export default function Faction({factionID, title, description}) {
                     flexDirection: 'column',
                     justifyContent: 'space-evenly',
                     alignItems: 'center',
-                    paddingTop: 2,
                     paddingBottom: 2,
                     backgroundColor: theme.palette.secondary.main,
                     color: theme.palette.secondary.contrastText,
@@ -25,7 +24,8 @@ export default function Faction({factionID, title, description}) {
                         width: 1,
                         display: 'flex',
                         justifyContent: 'space-evenly',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        paddingRight: 2,
                     }}
                 >
                     <Box
@@ -43,20 +43,30 @@ export default function Faction({factionID, title, description}) {
                             }}
                         />
                     </Box>
-                    <Box
+                    <Button
+                        variant="contained"
+                        color="primary"
                         sx={{
-                            width: 1/2,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
+                            width: 3/4,
+                            marginTop: 2,
+                            padding: 1,
                         }}
                     >
-                        <Typography variant="h5">{title}</Typography>
-                        {description ? (
-                            <Typography variant="p" sx={{paddingTop: .75}}>{description}</Typography>
-                        ):(<></>)}
-                    </Box>
+                        <Box
+                            sx={{
+                                width: 1,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Typography variant="h6">{title}</Typography>
+                            {description ? (
+                                <Typography variant="p" sx={{paddingTop: .75}}>{description}</Typography>
+                            ):(<></>)}
+                        </Box>
+                    </Button>
                 </Box>
             </Paper>
         </>
