@@ -102,6 +102,8 @@ export async function POST(req) {
             return await addBrand(db, data);
         case 'Game':
             return await addGame(db, data);
+        case 'Faction':
+            return await addFaction(db, data);
         default:
             console.log('A Type of: ', type, ' was recieved and is being rejected');
             return new Promise((resolve, reject) => {
@@ -159,6 +161,42 @@ async function addBrand(db, data){
 async function addGame (db, data) {
     return new Promise((resolve, reject) => {
         const query = `INSERT INTO games (brandID, gameName, gameDescription) VALUES (?, ?, ?)`;
+        const description = data.description ? data.description : null;
+
+        db.run(query, [data.parentID, data.name, description], function (err) {
+            if (err) {
+                reject(
+                    new Response(JSON.stringify({ error: err.message }), {
+                    status: 500,
+                    })
+                );
+            }
+            else {
+                resolve (
+                    new Response (
+                        JSON.stringify({
+                            id: this.lastID,
+                        }),
+                        {
+                            status: 201,
+                            headers: { 'Content-Type': 'application/json' },
+                        }
+                    )
+                )
+            }
+        })
+        
+        db.close((err) => {
+            if (err) {
+                console.error('Error Closing Database: ', err);
+            }
+        })
+    })
+}
+
+async function addFaction (db, data) {
+    return new Promise((resolve, reject) => {
+        const query = `INSERT INTO factions (gameID, factionName, factionDescription) VALUES (?, ?, ?)`;
         const description = data.description ? data.description : null;
 
         db.run(query, [data.parentID, data.name, description], function (err) {

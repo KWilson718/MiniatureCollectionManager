@@ -59,7 +59,7 @@ export default function Game({gameID, title, description}) {
                             alignItems: 'center',
                         }}
                     >
-                        <Typography variant="h4">{title}</Typography>
+                        <Typography variant="h5">{title}</Typography>
                         {description ? (
                             <Typography variant="p" sx={{paddingTop: .75}}>{description}</Typography>
                         ):(<></>)}
@@ -96,7 +96,7 @@ export default function Game({gameID, title, description}) {
                             alignItems: 'center',
                         }}
                     >
-                        <FactionListComponent />
+                        <FactionListComponent gameID={gameID} />
                     </Box>
                 ):(<></>)}
             </Paper>
