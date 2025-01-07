@@ -1,7 +1,8 @@
 import React from "react";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { Typography, useTheme, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
+import { Typography, useTheme, Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Stack, Divider } from "@mui/material";
+import Game from "./game";
 
 export default function GameListComponent({brandID}) {
     const [gameDialogOpen, setGameDialogOpen] = useState(false);
@@ -73,12 +74,28 @@ export default function GameListComponent({brandID}) {
         setGameDialogOpen(false);
     };
 
+    if (!Array.isArray(gameData)) {
+        return <div>No Games Available</div>; // or some fallback UI
+    }
+
     return (
         <>
+            <Stack
+                spacing={1}
+                divider={<Divider orientation="vertical" flexItem />}
+                sx={{
+                    width: 4/5
+                }}
+            >
+                {gameData.map((game) => (
+                    <Game key={game.id} gameID={game.id} title={game.gameName} description={game.gameDescription} />
+                ))}
+            </Stack>
             <Button
                 variant="contained"
                 color="primary"
                 sx={{
+                    width: 1/2,
                     marginTop: 2,
                     padding: 1,
                 }}

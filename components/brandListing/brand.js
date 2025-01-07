@@ -7,7 +7,7 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import GameListComponent from "../gameListing/gameList";
 
 export default function Brand({brandID, title, description}) {
-    const [selected, setSelected] = React.useState(false);
+    const [selected, setSelected] = useState(false);
 
     const theme = useTheme();
 
@@ -91,6 +91,7 @@ export default function Brand({brandID, title, description}) {
                         sx={{
                             width: 1,
                             display: 'flex',
+                            flexDirection: 'column',
                             justifyContent: 'center',
                             alignItems: 'center',
                         }}
