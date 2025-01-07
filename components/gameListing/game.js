@@ -4,6 +4,7 @@ import { Paper, Box, Typography, ToggleButton, useTheme } from '@mui/material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
+import FactionListComponent from '../factionListing/factionList';
 
 export default function Game({gameID, title, description}) {
     const [selected, setSelected] = useState(false);
@@ -85,6 +86,19 @@ export default function Game({gameID, title, description}) {
                         </ToggleButton>
                     </Box>
                 </Box>
+                {selected ? (
+                    <Box
+                        sx={{
+                            width: 1,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <FactionListComponent />
+                    </Box>
+                ):(<></>)}
             </Paper>
         </>
     );
