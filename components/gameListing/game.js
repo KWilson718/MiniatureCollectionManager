@@ -21,18 +21,29 @@ export default function Game({gameID, title, description}) {
                     flexDirection: 'column',
                     justifyContent: 'space-evenly',
                     alignItems: 'center',
-                    paddingTop: 2,
-                    paddingBottom: 2,
+                    padding: 2,
                     backgroundColor: theme.palette.secondary.main,
                     color: theme.palette.secondary.contrastText,
                 }}
             >
-                <Box
+                <ToggleButton
+                    value="check"
+                    selected={selected}
+                    onChange={() => setSelected((prevSelected) => !prevSelected)}
                     sx={{
                         width: 1,
                         display: 'flex',
                         justifyContent: 'space-evenly',
-                        alignItems: 'center'
+                        alignItems: 'center',
+                        backgroundColor: theme.palette.secondary.main, // Ensure background matches theme
+                        color: theme.palette.secondary.contrastText,   // Use contrast text color
+                        '&.Mui-selected': {
+                            backgroundColor: theme.palette.secondary.main, // Keep background consistent when selected
+                            color: theme.palette.secondary.contrastText,   // Keep text color consistent
+                        },
+                        '&:hover': {
+                            backgroundColor: theme.palette.secondary.dark, // Optional: Add a hover effect
+                        },
                     }}
                 >
                     <Box
@@ -73,19 +84,13 @@ export default function Game({gameID, title, description}) {
                         }}
                         color={theme.palette.secondary.contrastText}
                     >
-                        <ToggleButton
-                            value="check"
-                            selected={selected}
-                            onChange={() => setSelected((prevSelected) => !prevSelected)}
-                        >
-                            {selected ? 
-                                <KeyboardArrowDownIcon sx={{ color: theme.palette.secondary.contrastText, fontSize: "3rem" }} /> 
-                                : 
-                                <KeyboardArrowRightIcon sx={{ color: theme.palette.secondary.contrastText, fontSize: "3rem" }} />
-                            }
-                        </ToggleButton>
+                        {selected ? 
+                            <KeyboardArrowDownIcon sx={{ color: theme.palette.secondary.contrastText, fontSize: "3rem" }} /> 
+                            : 
+                            <KeyboardArrowRightIcon sx={{ color: theme.palette.secondary.contrastText, fontSize: "3rem" }} />
+                        }
                     </Box>
-                </Box>
+                </ToggleButton>
                 {selected ? (
                     <Box
                         sx={{
