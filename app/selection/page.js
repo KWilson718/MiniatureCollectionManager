@@ -1,10 +1,7 @@
 'use client'
 
 import { Box } from "@mui/material";
-
 import BrandListComponent from "@/components/brandListing/brandList";
-
-
 
 export default function SelectMini() {
 
