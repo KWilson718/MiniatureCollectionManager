@@ -1,9 +1,6 @@
 'use client'
 
-import { useState, useEffect } from "react";
-import { useRouter} from "next/navigation";
-
-import { Box, Button, TextField, Typography, Dialog, DialogTitle, DialogContent, DialogActions, useTheme } from "@mui/material";
+import { Box } from "@mui/material";
 
 import BrandListComponent from "@/components/brandListing/brandList";
 
