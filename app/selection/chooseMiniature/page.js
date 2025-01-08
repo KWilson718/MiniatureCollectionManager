@@ -3,19 +3,51 @@
 import MiniatureListComponent from "@/components/miniatureListing/miniatureList";
 import { Box, Typography, useTheme } from "@mui/material";
 import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useState, useEffect, useCallback } from "react";
 
 export default function SelectMini(){
     const searchParams = useSearchParams();
     const factionID = searchParams.get("factionID");
 
+    const [factionNameData, setFactionNameData] = useState({});
+
     const theme = useTheme();
+
+    const router = useRouter();
+
+    const fetchFactionName = useCallback(async () => {
+            try {
+                console.log('Looking for FactionID: ', factionID);
+                const response = await fetch(`/api/database?type=factionName&factionID=${factionID}`);
+                if (!response.ok) {
+                    throw new Error(`API Error: ${response.status} ${response.statusText}`);
+                }
+                const data = await response.json();
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+                setFactionNameData(data);
+            } catch (error) {
+                console.error('Error fetching factions:', error);
+                setFactionNameData({}); // Fallback to an empty state
+            }
+        }, [factionID]);
+        
+        useEffect(() => {
+            fetchFactionName();
+        }, [fetchFactionName]);
+    
+        const handleRefreshFactionName = () => {
+            fetchFactionName();
+        };
 
     if (!factionID) {
         return (
             <Box
                 sx={{
                     m: 0,
-                    p: 2,
+                    p: 10,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -41,7 +73,7 @@ export default function SelectMini(){
             }}
         >
             <Typography variant="h2">Click On A Miniature to View More Info</Typography>
-            <Typography variant="h5">Currently Looking for Miniatures from Faction: {factionID}</Typography>
+            <Typography variant="h5">Currently Looking for Miniatures from Faction: {factionNameData[0].factionName}</Typography>
             <MiniatureListComponent factionID={factionID} />
         </Box>
     );

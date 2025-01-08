@@ -39,6 +39,11 @@ export async function GET (req) {
                     queryParams.push(factionID);
                 }
                 break;
+            case 'factionName':
+                console.log("INSIDE OF SWITCH CASE HIT, TYPE: ", type, " FACTIONID: ", factionID);
+                query = `SELECT factionName FROM factions WHERE id = ?`;
+                queryParams.push(factionID);
+                break;
             default:
                 reject(
                     new Response (
