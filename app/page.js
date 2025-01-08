@@ -19,7 +19,7 @@ export default function Home() {
       }}
     >
       <h1>Miniature Collection Manager</h1>
-      <p>This should be a great way to track data about miniature collections</p>
+      <p>The One Stop Shop to Organizing Your Wargaming Miniature Collection</p>
       <Button
         onClick={() => {
           router.push('/selection')
