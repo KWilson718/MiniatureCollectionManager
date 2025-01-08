@@ -1,8 +1,12 @@
+import { useRouter } from "next/navigation";
+
 import { Paper, useTheme, Button, Box, Typography } from "@mui/material";
 import GroupIcon from '@mui/icons-material/Group';
 
 export default function Faction({factionID, title, description}) {
     const theme = useTheme();
+
+    const Router = useRouter();
 
     return(
         <>
@@ -38,6 +42,9 @@ export default function Faction({factionID, title, description}) {
                         '&:hover': {
                             backgroundColor: theme.palette.secondary.dark, // Optional: Add a hover effect
                         },
+                    }}
+                    onClick={() => {
+                        Router.push(`/selection/chooseMiniature/${factionID}`);
                     }}
                 >
                     <Box

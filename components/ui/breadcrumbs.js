@@ -63,9 +63,8 @@ const CustomBreadcrumbs = () => {
 
 const formatLabel = (value) => {
   const labelMap = {
-    selection: 'Find Miniature',
-    products: 'Products',
-    about: 'About Us',
+    selection: 'Select Faction',
+    chooseMiniature: 'Select Miniature'
   };
 
   return labelMap[value] || value.charAt(0).toUpperCase() + value.slice(1);
