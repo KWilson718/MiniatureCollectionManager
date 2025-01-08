@@ -11,6 +11,7 @@ export default function SelectMini(){
     const factionID = searchParams.get("factionID");
 
     const [factionNameData, setFactionNameData] = useState({});
+    const [factionName, setFactionName] = useState('');
 
     const theme = useTheme();
 
@@ -28,6 +29,9 @@ export default function SelectMini(){
                     throw new Error(data.error);
                 }
                 setFactionNameData(data);
+                if (Array.isArray(data)){
+                    setFactionName(data[0].factionName);
+                }
             } catch (error) {
                 console.error('Error fetching factions:', error);
                 setFactionNameData({}); // Fallback to an empty state
@@ -73,7 +77,7 @@ export default function SelectMini(){
             }}
         >
             <Typography variant="h2">Click On A Miniature to View More Info</Typography>
-            <Typography variant="h5">Currently Looking for Miniatures from Faction: {factionNameData[0].factionName}</Typography>
+            <Typography variant="h5">Currently Looking for Miniatures from Faction: {factionName}</Typography>
             <MiniatureListComponent factionID={factionID} />
         </Box>
     );
