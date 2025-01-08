@@ -14,14 +14,18 @@ export default function Faction({factionID, title, description}) {
                     flexDirection: 'column',
                     justifyContent: 'space-evenly',
                     alignItems: 'center',
-                    paddingBottom: 2,
+                    paddingTop: 1,
+                    paddingBottom: 1,
                     backgroundColor: theme.palette.secondary.main,
                     color: theme.palette.secondary.contrastText,
                 }}
             >
-                <Box
+                <Button
+                    variant="text"
+                    color="primary"
                     sx={{
-                        width: 1,
+                        width: 3/4,
+                        padding: 1,
                         display: 'flex',
                         justifyContent: 'space-evenly',
                         alignItems: 'center',
@@ -43,31 +47,23 @@ export default function Faction({factionID, title, description}) {
                             }}
                         />
                     </Box>
-                    <Button
-                        variant="contained"
-                        color="primary"
+                    <Box
                         sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
                             width: 3/4,
                             marginTop: 2,
                             padding: 1,
                         }}
                     >
-                        <Box
-                            sx={{
-                                width: 1,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                            }}
-                        >
-                            <Typography variant="h6">{title}</Typography>
-                            {description ? (
-                                <Typography variant="p" sx={{paddingTop: .75}}>{description}</Typography>
-                            ):(<></>)}
-                        </Box>
-                    </Button>
-                </Box>
+                        <Typography variant="h6">{title}</Typography>
+                        {description ? (
+                            <Typography variant="p" sx={{paddingTop: .75}}>{description}</Typography>
+                        ):(<></>)}
+                    </Box>
+                </Button>
             </Paper>
         </>
     );
