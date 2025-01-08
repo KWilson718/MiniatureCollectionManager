@@ -14,8 +14,7 @@ export default function Faction({factionID, title, description}) {
                     flexDirection: 'column',
                     justifyContent: 'space-evenly',
                     alignItems: 'center',
-                    paddingTop: 1,
-                    paddingBottom: 1,
+                    padding: 2,
                     backgroundColor: theme.palette.secondary.main,
                     color: theme.palette.secondary.contrastText,
                 }}
@@ -24,12 +23,21 @@ export default function Faction({factionID, title, description}) {
                     variant="text"
                     color="primary"
                     sx={{
-                        width: 3/4,
+                        width: 1,
                         padding: 1,
                         display: 'flex',
                         justifyContent: 'space-evenly',
                         alignItems: 'center',
                         paddingRight: 2,
+                        backgroundColor: theme.palette.secondary.main, // Ensure background matches theme
+                        color: theme.palette.secondary.contrastText,   // Use contrast text color
+                        '&.Mui-selected': {
+                            backgroundColor: theme.palette.secondary.main, // Keep background consistent when selected
+                            color: theme.palette.secondary.contrastText,   // Keep text color consistent
+                        },
+                        '&:hover': {
+                            backgroundColor: theme.palette.secondary.dark, // Optional: Add a hover effect
+                        },
                     }}
                 >
                     <Box
@@ -54,7 +62,6 @@ export default function Faction({factionID, title, description}) {
                             justifyContent: 'center',
                             alignItems: 'center',
                             width: 3/4,
-                            marginTop: 2,
                             padding: 1,
                         }}
                     >
