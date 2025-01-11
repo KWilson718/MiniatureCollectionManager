@@ -10,6 +10,7 @@ export async function GET (req) {
         const brandID = params.get("brandID");
         const gameID = params.get("gameID");
         const factionID = params.get("factionID");
+        const quantities = params.get("quantities");
 
         let query;
         let queryParams = [];
@@ -40,7 +41,6 @@ export async function GET (req) {
                 }
                 break;
             case 'factionName':
-                console.log("INSIDE OF SWITCH CASE HIT, TYPE: ", type, " FACTIONID: ", factionID);
                 query = `SELECT factionName FROM factions WHERE id = ?`;
                 queryParams.push(factionID);
                 break;
@@ -109,13 +109,15 @@ export async function POST(req) {
             return await addGame(db, data);
         case 'Faction':
             return await addFaction(db, data);
+        case 'Miniature':
+            return await addMiniature(db, data);
         default:
             console.log('A Type of: ', type, ' was recieved and is being rejected');
             return new Promise((resolve, reject) => {
                 reject(
                     new Response(
                         JSON.stringify({
-                            error: 'Type Not Specified Correctly, Valid Types are Brand'
+                            error: 'Type Not Specified Correctly, Valid Types are Brand, Game, Faction, Miniature'
                         }),
                         {
                             status: 500,
@@ -205,6 +207,42 @@ async function addFaction (db, data) {
         const description = data.description ? data.description : null;
 
         db.run(query, [data.parentID, data.name, description], function (err) {
+            if (err) {
+                reject(
+                    new Response(JSON.stringify({ error: err.message }), {
+                    status: 500,
+                    })
+                );
+            }
+            else {
+                resolve (
+                    new Response (
+                        JSON.stringify({
+                            id: this.lastID,
+                        }),
+                        {
+                            status: 201,
+                            headers: { 'Content-Type': 'application/json' },
+                        }
+                    )
+                )
+            }
+        })
+        
+        db.close((err) => {
+            if (err) {
+                console.error('Error Closing Database: ', err);
+            }
+        })
+    })
+}
+
+async function addMiniature (db, data) {
+    return new Promise((resolve, reject) => {
+        const query = `INSERT INTO miniatures (factionID, miniatureName, miniatureDescription, qtyUnassembled, qtyBuilt, qtyPrimed, qtyPartiallyPainted, qtyBattleReady, qtyParadeReady) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        const description = data.description ? data.description : null;
+
+        db.run(query, [data.parentID, data.name, description, data.quantities[0], data.quantities[1], data.quantities[2], data.quantities[3], data.quantities[4], data.quantities[5], ], function (err) {
             if (err) {
                 reject(
                     new Response(JSON.stringify({ error: err.message }), {
