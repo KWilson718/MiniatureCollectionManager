@@ -93,7 +93,6 @@ export default function MiniatureListComponent({ factionID }) {
     
     return (
         <>
-            <Typography>{JSON.stringify(miniatureData)}</Typography>
             <Stack
                 spacing={1}
                 divider={<Divider orientation="vertical" flexItem />}

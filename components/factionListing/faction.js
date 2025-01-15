@@ -6,7 +6,7 @@ import GroupIcon from '@mui/icons-material/Group';
 export default function Faction({factionID, title, description}) {
     const theme = useTheme();
 
-    const Router = useRouter();
+    const router = useRouter();
 
     return(
         <>
@@ -44,7 +44,7 @@ export default function Faction({factionID, title, description}) {
                         },
                     }}
                     onClick={() => {
-                        Router.push(`/selection/chooseMiniature?factionID=${factionID}`);
+                        router.push(`/selection/chooseMiniature?factionID=${factionID}`);
                     }}
                 >
                     <Box

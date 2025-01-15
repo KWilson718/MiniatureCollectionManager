@@ -77,7 +77,7 @@ export default function SelectMini(){
             }}
         >
             <Typography variant="h2">Click On A Miniature to View More Info</Typography>
-            <Typography variant="h5">Currently Looking for Miniatures from Faction: {factionName}</Typography>
+            <Typography variant="h5">Currently Viewing Miniatures from Faction: {factionName}</Typography>
             <MiniatureListComponent factionID={factionID} />
         </Box>
     );
