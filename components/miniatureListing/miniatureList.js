@@ -97,7 +97,7 @@ export default function MiniatureListComponent({ factionID }) {
                 spacing={1}
                 divider={<Divider orientation="vertical" flexItem />}
                 sx={{
-                    width: 7/8,
+                    width: 3/5,
                     marginTop: 1,
                 }}
             >

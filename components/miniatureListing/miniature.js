@@ -1,10 +1,14 @@
-import { Button, Paper, Typography, useTheme } from "@mui/material";
+import { Button, Paper, Typography, useTheme, Box } from "@mui/material";
 import { useRouter } from "next/navigation";
 
 export default function Miniature({ factionID, miniatureID, title, description, quantities }) {
     const theme = useTheme();
 
     const router = useRouter();
+
+    const inProgress = Array.isArray(quantities) ? ((quantities[0] + quantities[1] + quantities[2] + quantities[3])) : 0;
+
+    const completed = Array.isArray(quantities) ? ((quantities[4] + quantities[5])) : 0;
 
     return(
         <Paper
@@ -44,9 +48,14 @@ export default function Miniature({ factionID, miniatureID, title, description, 
                     router.push(`/selection/chooseMiniature/singleMiniature?miniatureID=${miniatureID}`);
                 }}
             >
-                <Typography variant="h5">Title: {title}</Typography>
-                <Typography variant="h5">Description: {description}</Typography>
-                <Typography variant="h6">Potentially some Quantities {JSON.stringify(quantities)}</Typography>
+                <Box>
+                    <Typography variant="h4">Title: {title}</Typography>
+                    <Typography variant="h5">Description: {description}</Typography>
+                </Box>
+                <Box>
+                    <Typography variant="h6">In Progress: {inProgress}</Typography>
+                    <Typography variant="h6">Completed: {completed}</Typography>
+                </Box>
             </Button>
         </Paper>
     );
