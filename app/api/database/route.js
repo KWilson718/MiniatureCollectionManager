@@ -10,6 +10,7 @@ export async function GET (req) {
         const brandID = params.get("brandID");
         const gameID = params.get("gameID");
         const factionID = params.get("factionID");
+        const miniatureID = params.get("miniatureID");
         const quantities = params.get("quantities");
 
         let query;
@@ -38,6 +39,10 @@ export async function GET (req) {
                 if(factionID){
                     query += ` WHERE factionID = ?`;
                     queryParams.push(factionID);
+                }
+                else if(miniatureID) {
+                    query += ` WHERE id = ?`;
+                    queryParams.push(miniatureID);
                 }
                 break;
             case 'factionName':
