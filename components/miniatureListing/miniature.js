@@ -49,8 +49,8 @@ export default function Miniature({ factionID, miniatureID, title, description, 
                 }}
             >
                 <Box>
-                    <Typography variant="h4">Title: {title}</Typography>
-                    <Typography variant="h5">Description: {description}</Typography>
+                    <Typography variant="h4">{title}</Typography>
+                    <Typography variant="h5">{description}</Typography>
                 </Box>
                 <Box>
                     <Typography variant="h6">In Progress: {inProgress}</Typography>
