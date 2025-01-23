@@ -3,7 +3,7 @@
 import React from "react";
 import { useState, useEffect, useCallback} from "react";
 import { useTheme } from "@emotion/react";
-import { Box, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export default function SingleMiniaturePage(){
@@ -48,14 +48,30 @@ export default function SingleMiniaturePage(){
             sx={{
                 m: 0,
                 p: 2,
-                paddingTop: 4,
+                paddingTop: 6,
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexDirection: 'column'
             }}
         >
-            <Typography variant="h3">{miniatureData.miniatureName}</Typography>
+            <Paper
+                elevation={3}
+                sx={{
+                    width: 5/6,
+                    display: "flex",
+                    flexDirection: 'column',
+                    justifyContent: 'space-evenly',
+                    alignItems: 'center',
+                    padding: 4,
+                    backgroundColor: theme.palette.secondary.main,
+                    color: theme.palette.secondary.contrastText,
+                }}
+            >
+                <Typography variant="h3">{miniatureData.miniatureName}</Typography>
+                <Typography variant="h5">{miniatureData.miniatureDescription}</Typography>
+            </Paper>
+            
             <Typography variant='p'>{JSON.stringify(miniatureData)}</Typography>
         </Box>
     );
