@@ -3,7 +3,6 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme, Button, Typography, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Stack, Divider, Paper } from "@mui/material";
 import { DataGrid } from '@mui/x-data-grid';
-import Miniature from "./miniature";
 
 export default function MiniatureListComponent({ factionID }) {
     const [miniatureDialogOpen, setMiniatureDialogOpen] = useState(false);
@@ -108,35 +107,6 @@ export default function MiniatureListComponent({ factionID }) {
     
     return (
         <>
-            <Typography variant='p'>{JSON.stringify(miniatureData)}</Typography>
-            <Stack
-                spacing={1}
-                divider={<Divider orientation="vertical" flexItem />}
-                sx={{
-                    width: 3/5,
-                    marginTop: 1,
-                }}
-            >
-                {miniatureData.map((miniature) => (
-                    <Miniature key={miniature.id} factionID={factionID} miniatureID={miniature.id} title={miniature.miniatureName} description={miniature.miniatureDescription} quantities={[miniature.qtyUnassembled, miniature.qtyBuilt, miniature.qtyPrimed, miniature.qtyPartiallyPainted, miniature.qtyBattleReady, miniature.qtyParadeReady]} />
-                ))}
-            </Stack>
-            <Button
-                variant="contained"
-                color="secondary"
-                sx={{
-                    width: 1/2,
-                    marginTop: 4,
-                    padding: 1,
-                }}
-                onClick={() => {
-                    console.log("Create Miniature Button Clicked!");
-                    setMiniatureDialogOpen(true);
-                }}
-            >
-                <Typography variant='h5'>Add Miniature</Typography>
-            </Button>
-
             <Paper
                 elevation={3}
                 sx={{
@@ -146,6 +116,7 @@ export default function MiniatureListComponent({ factionID }) {
                     justifyContent: 'space-evenly',
                     alignItems: 'center',
                     padding: 2,
+                    marginTop: 4,
                     backgroundColor: theme.palette.secondary.main,
                     color: theme.palette.secondary.contrastText,
                 }}
@@ -192,6 +163,23 @@ export default function MiniatureListComponent({ factionID }) {
                     }}
                 />
             </Paper>
+
+            <Button
+                variant="contained"
+                color="secondary"
+                sx={{
+                    width: 1/2,
+                    marginTop: 4,
+                    padding: 1,
+                }}
+                onClick={() => {
+                    console.log("Create Miniature Button Clicked!");
+                    setMiniatureDialogOpen(true);
+                }}
+            >
+                <Typography variant='h5'>Add Miniature</Typography>
+            </Button>
+
 
             <Dialog
                 open={miniatureDialogOpen} 
