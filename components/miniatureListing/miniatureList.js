@@ -99,7 +99,7 @@ export default function MiniatureListComponent({ factionID }) {
         
     ];
 
-    const paginationModel = { page: 0, pageSize: 10 };
+    const paginationModel = { page: 0, pageSize: 5 };
 
     if (!Array.isArray(miniatureData)) {
         return <div><h1>Loading Miniatures</h1></div>;
@@ -125,7 +125,7 @@ export default function MiniatureListComponent({ factionID }) {
                     rows={miniatureData}
                     columns={columns}
                     initialState={{ pagination: { paginationModel } }}
-                    pageSizeOptions={[5, 10]}
+                    pageSizeOptions={[5, 10, 20]}
                     sx={{
                         width: 1,
                         '& .MuiDataGrid-root': {
