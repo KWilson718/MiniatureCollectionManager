@@ -44,7 +44,7 @@ export default function Faction({factionID, title, description}) {
                         },
                     }}
                     onClick={() => {
-                        router.push(`/selection/chooseMiniature?factionID=${factionID}`);
+                        router.push(`/selection/viewing?factionID=${factionID}`);
                     }}
                 >
                     <Box

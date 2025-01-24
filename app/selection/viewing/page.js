@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 
-export default function SelectMini(){
+export default function ViewMinis(){
     const searchParams = useSearchParams();
     const factionID = searchParams.get("factionID");
 
@@ -76,8 +76,7 @@ export default function SelectMini(){
                 flexDirection: 'column'
             }}
         >
-            <Typography variant="h2">Click On A Miniature To View More Info</Typography>
-            <Typography variant="h5">Miniatures Are From: {factionName}</Typography>
+            <Typography variant="h4">Miniatures Are From: {factionName}</Typography>
             <MiniatureListComponent factionID={factionID} />
         </Box>
     );
