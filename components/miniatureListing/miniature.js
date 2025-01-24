@@ -44,9 +44,6 @@ export default function Miniature({ factionID, miniatureID, title, description, 
                         backgroundColor: theme.palette.secondary.dark, // Optional: Add a hover effect
                     },
                 }}
-                onClick={() => {
-                    router.push(`/selection/chooseMiniature/singleMiniature?miniatureID=${miniatureID}`);
-                }}
             >
                 <Box>
                     <Typography variant="h4">{title}</Typography>
