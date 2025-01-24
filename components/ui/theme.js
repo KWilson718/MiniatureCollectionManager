@@ -15,6 +15,23 @@ const theme = createTheme({
         contrastText: '#ffffff',
       },
     },
+    components: {
+      MuiDataGrid: {
+        styleOverrides: {
+          root: {
+            backgroundColor: '#282828',
+          },
+          columnHeaders: {
+            backgroundColor: '#282828',
+            color: '#ffffff',
+          },
+          footerContainer: {
+            backgroundColor: '#282828',
+            color: '#ffffff',
+          },
+        },
+      },
+    }
   });
 
 export default theme;

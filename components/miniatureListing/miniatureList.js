@@ -1,7 +1,8 @@
 import React from "react";
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { useTheme, Button, Typography, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Stack, Divider } from "@mui/material";
+import { useTheme, Button, Typography, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Stack, Divider, Paper } from "@mui/material";
+import { DataGrid } from '@mui/x-data-grid';
 import Miniature from "./miniature";
 
 export default function MiniatureListComponent({ factionID }) {
@@ -87,12 +88,27 @@ export default function MiniatureListComponent({ factionID }) {
         setMiniatureDialogOpen(false);
     }
 
+    const columns = [
+        {field: 'miniatureName', headerName: 'Name', flex: 1},
+        {field: 'miniatureDescription', headerName: 'Description', flex: 1},
+        {field: 'qtyUnassembled', headerName: 'Quantity Unassembled', flex: 1},
+        {field: 'qtyBuilt', headerName: 'Quantity Built', flex: 1},
+        {field: 'qtyPrimed', headerName: 'Quantity Primed', flex: 1},
+        {field: 'qtyPartiallyPainted', headerName: 'Quantity Partially Painted', flex: 1},
+        {field: 'qtyBattleReady', headerName: 'Quantity Battle Ready', flex: 1},
+        {field: 'qtyParadeReady', headerName: 'Quantity Parade Ready', flex: 1},
+        
+    ];
+
+    const paginationModel = { page: 0, pageSize: 10 };
+
     if (!Array.isArray(miniatureData)) {
         return <div><h1>Loading Miniatures</h1></div>;
     }
     
     return (
         <>
+            <Typography variant='p'>{JSON.stringify(miniatureData)}</Typography>
             <Stack
                 spacing={1}
                 divider={<Divider orientation="vertical" flexItem />}
@@ -120,6 +136,62 @@ export default function MiniatureListComponent({ factionID }) {
             >
                 <Typography variant='h5'>Add Miniature</Typography>
             </Button>
+
+            <Paper
+                elevation={3}
+                sx={{
+                    width: 1,
+                    display: "flex",
+                    flexDirection: 'column',
+                    justifyContent: 'space-evenly',
+                    alignItems: 'center',
+                    padding: 2,
+                    backgroundColor: theme.palette.secondary.main,
+                    color: theme.palette.secondary.contrastText,
+                }}
+            >
+                <DataGrid 
+                    rows={miniatureData}
+                    columns={columns}
+                    initialState={{ pagination: { paginationModel } }}
+                    pageSizeOptions={[5, 10]}
+                    sx={{
+                        width: 1,
+                        '& .MuiDataGrid-root': {
+                            backgroundColor: theme.palette.secondary.main,
+                            color: theme.palette.secondary.contrastText,
+                        },
+                        '& .MuiDataGrid-columnHeaders': {
+                            backgroundColor: theme.palette.secondary.main,
+                            color: theme.palette.secondary.contrastText,
+                        },
+                        '& .MuiDataGrid-columnHeader': {
+                            backgroundColor: theme.palette.secondary.main,
+                            color: theme.palette.secondary.contrastText,
+                        },
+                        '& .MuiDataGrid-columnHeaderRow': {
+                            backgroundColor: theme.palette.secondary.main,
+                            color: theme.palette.secondary.contrastText,
+                        },
+                        '& .MuiDataGrid-cell': {
+                            color: theme.palette.secondary.contrastText,
+                        },
+                        '& .MuiDataGrid-footerContainer': {
+                            backgroundColor: theme.palette.secondary.main,
+                            color: theme.palette.secondary.contrastText,
+                        },
+                        '& .MuiSvgIcon-root': {
+                            color: theme.palette.secondary.contrastText,
+                        },
+                        '& .MuiDataGrid-sortIcon': {
+                            color: theme.palette.secondary.contrastText,
+                        },
+                        '& .MuiTablePagination-root': {
+                            color: theme.palette.secondary.contrastText,
+                        },
+                    }}
+                />
+            </Paper>
 
             <Dialog
                 open={miniatureDialogOpen} 
