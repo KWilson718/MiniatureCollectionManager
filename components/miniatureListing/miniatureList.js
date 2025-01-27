@@ -125,7 +125,7 @@ export default function MiniatureListComponent({ factionID }) {
         }
     }
 
-    const handleEditMinaiture = async () => {
+    const handleEditMiniature = async () => {
         try{
             console.log("Editing Miniature Mode Hit");
         }
