@@ -5,6 +5,7 @@ import { useTheme, Button, Typography, Dialog, DialogTitle, DialogContent, Dialo
 import { DataGrid } from '@mui/x-data-grid';
 
 export default function MiniatureListComponent({ factionID }) {
+    const [miniatureDialogEditMode, setMiniatureDialogEditMode] = useState(false); // Create when false, Edit when true
     const [miniatureDialogOpen, setMiniatureDialogOpen] = useState(false);
     const [miniatureName, setMiniatureName] = useState('');
     const [miniatureDescription, setMiniatureDescription] = useState('');
@@ -63,14 +64,29 @@ export default function MiniatureListComponent({ factionID }) {
 
     const handleEdit = () => {
         console.log("Edit row:", selectedRowData);
-        // Add logic to open an edit dialog or redirect to an edit page
+        
+        // Sets the data from selectedRowData into the Miniature Dialog useStates
+        setMiniatureName(selectedRowData.miniatureName);
+        setMiniatureDescription(selectedRowData.miniatureDescription);
+        setQtyNOS(selectedRowData.qtyUnassembled);
+        setQtyBuilt(selectedRowData.qtyBuilt);
+        setQtyPrimed(selectedRowData.qtyPrimed);
+        setQtyPartially(selectedRowData.qtyPartiallyPainted);
+        setQtyBattleReady(selectedRowData.qtyBattleReady);
+        setQtyParadeReady(selectedRowData.qtyParadeReady);
+
+        // Handles setup for the dialog and then opens it
+        setMiniatureDialogEditMode(true);
+        
+        setMiniatureDialogOpen(true);
+
     };
 
     const handleDelete = async () => {
         console.log("Delete Row", selectedRowData)
     };
 
-    const handleMiniatureDialogSubmit = async () => {
+    const handleCreateMiniature = async () => {
         try {
             const response  = await fetch('/api/database', {
                 method: 'POST',
@@ -106,6 +122,24 @@ export default function MiniatureListComponent({ factionID }) {
         }
         catch(err){
             console.error("Error Adding Miniature", err);
+        }
+    }
+
+    const handleEditMinaiture = async () => {
+        try{
+            console.log("Editing Miniature Mode Hit");
+        }
+        catch(err) {
+            console.error("Error Editing Miniature");
+        }
+    }
+
+    const handleMiniatureDialogSubmit = async () => {
+        if(miniatureDialogEditMode){
+            await handleEditMiniature();
+        }
+        else {
+            await handleCreateMiniature();
         }
 
         setMiniatureDialogOpen(false);
@@ -230,6 +264,15 @@ export default function MiniatureListComponent({ factionID }) {
                 }}
                 onClick={() => {
                     console.log("Create Miniature Button Clicked!");
+                    setMiniatureDialogEditMode(false);
+                    setMiniatureName('');
+                    setMiniatureDescription('');
+                    setQtyNOS(0);
+                    setQtyBuilt(0);
+                    setQtyPrimed(0);
+                    setQtyPartially(0);
+                    setQtyBattleReady(0);
+                    setQtyParadeReady(0);
                     setMiniatureDialogOpen(true);
                 }}
             >
