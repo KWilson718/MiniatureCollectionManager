@@ -127,7 +127,38 @@ export default function MiniatureListComponent({ factionID }) {
 
     const handleEditMiniature = async () => {
         try{
-            console.log("Editing Miniature Mode Hit");
+            const response = await fetch('/api/database', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type: 'Miniature',
+                    data: {
+                        id: selectedRowData.id,
+                        parentID: factionID,
+                        name: miniatureName,
+                        description: miniatureDescription,
+                        quantities: [qtyNOS, qtyBuilt, qtyPrimed, qtyPartially, qtyBattleReady, qtyParadeReady],
+                    }
+                })
+            });
+
+            if (response.ok) {
+                console.log('Miniature Successfully Edited!');
+                fetchMiniatures();
+                setMiniatureName('');
+                setMiniatureDescription('');
+                setQtyNOS(0);
+                setQtyBuilt(0); 
+                setQtyPrimed(0); 
+                setQtyPartially(0); 
+                setQtyBattleReady(0);
+                setQtyParadeReady(0);
+            }
+            else {
+                console.error('Failed to edit miniature.');
+            }
         }
         catch(err) {
             console.error("Error Editing Miniature");

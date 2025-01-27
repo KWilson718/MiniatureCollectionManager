@@ -277,3 +277,104 @@ async function addMiniature (db, data) {
         })
     })
 }
+
+export async function PUT(req){
+    const db = await initDB();
+    const { type, data } = await req.json();
+
+    console.log('Type Set to: ', type);
+
+    switch(type){
+        case 'Miniature':
+            return await updateMiniature(db, data);
+        default:
+            console.log('A Type of: ', type, ' was recieved and is being rejected');
+            return new Promise((resolve, reject) => {
+                reject(
+                    new Response(
+                        JSON.stringify({
+                            error: 'Type Not Specified Correctly, Valid Types are Brand, Game, Faction, Miniature'
+                        }),
+                        {
+                            status: 500,
+                        }
+                    )
+                )
+            });
+    }
+}
+
+async function updateMiniature(db, data) {
+    return new Promise((resolve, reject) => {
+        // Construct the SQL query to update a miniature by its id
+        const query = `UPDATE miniatures 
+                       SET 
+                           miniatureName = ?, 
+                           miniatureDescription = ?, 
+                           qtyUnassembled = ?, 
+                           qtyBuilt = ?, 
+                           qtyPrimed = ?, 
+                           qtyPartiallyPainted = ?, 
+                           qtyBattleReady = ?, 
+                           qtyParadeReady = ? 
+                       WHERE id = ?`;
+
+        // Ensure all required fields are provided
+        const description = data.description ? data.description : null;
+
+        // Prepare the parameters for the query
+        const params = [
+            data.name, 
+            description, 
+            data.quantities[0], 
+            data.quantities[1], 
+            data.quantities[2], 
+            data.quantities[3], 
+            data.quantities[4], 
+            data.quantities[5], 
+            data.id  // the id of the miniature to update
+        ];
+
+        // Execute the query
+        db.run(query, params, function (err) {
+            if (err) {
+                reject(
+                    new Response(JSON.stringify({ error: err.message }), {
+                        status: 500,
+                    })
+                );
+            } else {
+                // Check if any row was updated
+                if (this.changes === 0) {
+                    reject(
+                        new Response(
+                            JSON.stringify({
+                                error: 'Miniature not found or no changes made.',
+                            }),
+                            { status: 404 }
+                        )
+                    );
+                } else {
+                    resolve(
+                        new Response(
+                            JSON.stringify({
+                                id: data.id, // Return the ID of the updated miniature
+                            }),
+                            {
+                                status: 200,
+                                headers: { 'Content-Type': 'application/json' },
+                            }
+                        )
+                    );
+                }
+            }
+        });
+
+        // Close the database connection
+        db.close((err) => {
+            if (err) {
+                console.error('Error Closing Database: ', err);
+            }
+        });
+    });
+}
