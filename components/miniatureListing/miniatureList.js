@@ -16,6 +16,9 @@ export default function MiniatureListComponent({ factionID }) {
     const [qtyParadeReady, setQtyParadeReady] = useState(0);
 
     const [miniatureData, setMiniatureData] = useState({});
+
+    const [selectedRowId, setSelectedRowId] = useState(null);
+    const [selectedRowData, setSelectedRowData] = useState(null);
     
     const theme = useTheme();
 
@@ -44,6 +47,27 @@ export default function MiniatureListComponent({ factionID }) {
 
     const handleRefreshMiniatures = () => {
         fetchMiniatures();
+    };
+
+    const handleRowSelection = (selectionModel) => {
+        if (selectionModel.length > 0) {
+            const selectedId = selectionModel[0]; // Get the first selected row's ID
+            const rowData = miniatureData.find(row => row.id === selectedId);
+            setSelectedRowId(selectedId);
+            setSelectedRowData(rowData);
+        } else {
+            setSelectedRowId(null);
+            setSelectedRowData(null);
+        }
+    };
+
+    const handleEdit = () => {
+        console.log("Edit row:", selectedRowData);
+        // Add logic to open an edit dialog or redirect to an edit page
+    };
+
+    const handleDelete = async () => {
+        console.log("Delete Row", selectedRowData)
     };
 
     const handleMiniatureDialogSubmit = async () => {
@@ -126,6 +150,19 @@ export default function MiniatureListComponent({ factionID }) {
                     columns={columns}
                     initialState={{ pagination: { paginationModel } }}
                     pageSizeOptions={[5, 10, 20]}
+                    rowSelectionModel={selectedRowId ? [selectedRowId] : []}
+                    onRowSelectionModelChange={(newSelection) => {
+                        const selectedId = newSelection[0] || null; // Get the first selected row ID or null
+                        const rowData = miniatureData.find(row => row.id === selectedId); // Find the row data
+                        if (selectedRowId == selectedId) {
+                            setSelectedRowId(null);
+                            setSelectedRowData(null);
+                        }
+                        else {
+                            setSelectedRowId(selectedId);
+                            setSelectedRowData(rowData);
+                        }
+                    }}
                     sx={{
                         width: 1,
                         '& .MuiDataGrid-root': {
@@ -163,6 +200,25 @@ export default function MiniatureListComponent({ factionID }) {
                     }}
                 />
             </Paper>
+
+            {selectedRowId && (
+                <Stack direction="row" spacing={2} sx={{ marginTop: 2 }}>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={handleEdit}
+                    >
+                        Edit
+                    </Button>
+                    <Button
+                        variant="contained"
+                        color="error"
+                        onClick={handleDelete}
+                    >
+                        Delete
+                    </Button>
+                </Stack>
+            )}
 
             <Button
                 variant="contained"
