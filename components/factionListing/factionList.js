@@ -5,6 +5,9 @@ import { useTheme, Button, Typography, Dialog, DialogTitle, DialogContent, Dialo
 import Faction from "./faction";
 
 export default function FactionListComponent({gameID}) {
+    const [factionDoalogEditMode, setFactionDialogEditMode] = useState(false); // Create mode when false, edit mode when true
+    const [factionEditPrevVal, setFactionEditPrevVal] = useState({});
+
     const [factionDialogOpen, setFactionDialogOpen] = useState(false);
     const [factionName, setFactionName] = useState('');
     const [factionDescription, setFactionDescription] = useState('');
@@ -76,6 +79,12 @@ export default function FactionListComponent({gameID}) {
 
     const handleFactionEdit = async (itemID) => {
         console.log("Handle Faction Edit Hit, Faction ID:", itemID);
+        const factionToEdit = factionData.find(object => object.id === itemID);
+        setFactionEditPrevVal(factionToEdit);
+        setFactionName(factionToEdit.name);
+        setFactionDescription(factionToEdit.description || '');
+        setFactionDialogEditMode(true);
+        setFactionDialogOpen(true);        
     }
 
     const handleFactionDelete = async (itemID) => {
@@ -110,6 +119,7 @@ export default function FactionListComponent({gameID}) {
                 }}
                 onClick={() => {
                     console.log('Add Faction Button Clicked');
+                    setFactionDialogEditMode(false);
                     setFactionDialogOpen(true);
                 }}
             >
@@ -126,7 +136,7 @@ export default function FactionListComponent({gameID}) {
                     },
                 }}  
             >
-                <DialogTitle>Add New Faction</DialogTitle>
+                <DialogTitle>{factionDialogEditMode ? 'Edit Faction' : 'Add New Faction'}</DialogTitle>
                 <DialogContent>
                     <TextField
                         label="Faction Name"
@@ -151,7 +161,7 @@ export default function FactionListComponent({gameID}) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setFactionDialogOpen(false)} variant="contained" color="secondary">Cancel</Button>
-                    <Button onClick={() => handleFactionDialogSubmit} variant="contained" color="secondary">
+                    <Button onClick={handleFactionDialogSubmit} variant="contained" color="secondary">
                         Submit
                     </Button>
                 </DialogActions>
@@ -159,3 +169,8 @@ export default function FactionListComponent({gameID}) {
         </>
     );
 }
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+// In progress on adding edit mode, have the ability to differ between dialog modes, but need to implement submit functionality equivalence

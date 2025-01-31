@@ -359,7 +359,7 @@ export default function MiniatureListComponent({ factionID }) {
                     },
                 }} 
             >
-                <DialogTitle>Add New Miniature</DialogTitle>
+                <DialogTitle>{miniatureDialogEditMode ? 'Edit Miniature' : 'Add New Miniature'}</DialogTitle>
                 <DialogContent>
                     <TextField
                         label="Miniature Name"
