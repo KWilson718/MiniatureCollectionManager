@@ -5,7 +5,7 @@ import GroupIcon from '@mui/icons-material/Group';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export default function Faction({factionID, title, description}) {
+export default function Faction({factionID, title, description, triggerEdit, triggerDelete}) {
     const theme = useTheme();
 
     const router = useRouter();
@@ -104,6 +104,7 @@ export default function Faction({factionID, title, description}) {
                             backgroundColor: theme.palette.secondary.dark, // Optional: Add a hover effect
                         },
                     }}
+                    onClick={() => triggerEdit(factionID)}
                 >
                     <EditIcon />
                 </Button>
@@ -128,6 +129,7 @@ export default function Faction({factionID, title, description}) {
                             backgroundColor: theme.palette.secondary.dark, // Optional: Add a hover effect
                         },
                     }}
+                    onClick={() => triggerDelete(factionID)}
                 >
                     <DeleteIcon />
                 </Button>

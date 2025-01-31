@@ -74,6 +74,14 @@ export default function FactionListComponent({gameID}) {
         setFactionDialogOpen(false);
     };
 
+    const handleFactionEdit = async (itemID) => {
+        console.log("Handle Faction Edit Hit, Faction ID:", itemID);
+    }
+
+    const handleFactionDelete = async (itemID) => {
+        console.log("Handle Faction Delete Hit, Faction ID:", itemID);
+    }
+
     if (!Array.isArray(factionData)) {
         return <div><h1>Loading Factions</h1></div>;
     }
@@ -89,7 +97,7 @@ export default function FactionListComponent({gameID}) {
                 }}
             >
                 {factionData.map((faction) => (
-                    <Faction key={faction.id} factionID={faction.id} title={faction.factionName} description={faction.factionDescription} />
+                    <Faction key={faction.id} factionID={faction.id} title={faction.factionName} description={faction.factionDescription} triggerEdit={handleFactionEdit} triggerDelete={handleFactionDelete} />
                 ))}
             </Stack>
             <Button
@@ -143,7 +151,7 @@ export default function FactionListComponent({gameID}) {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setFactionDialogOpen(false)} variant="contained" color="secondary">Cancel</Button>
-                    <Button onClick={handleFactionDialogSubmit} variant="contained" color="secondary">
+                    <Button onClick={() => handleFactionDialogSubmit} variant="contained" color="secondary">
                         Submit
                     </Button>
                 </DialogActions>
