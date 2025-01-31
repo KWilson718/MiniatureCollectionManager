@@ -229,75 +229,80 @@ export default function MiniatureListComponent({ factionID }) {
     
     return (
         <>
-            <Paper
-                elevation={3}
-                sx={{
-                    width: 1,
-                    display: "flex",
-                    flexDirection: 'column',
-                    justifyContent: 'space-evenly',
-                    alignItems: 'center',
-                    padding: 2,
-                    marginTop: 4,
-                    backgroundColor: theme.palette.secondary.main,
-                    color: theme.palette.secondary.contrastText,
-                }}
-            >
-                <DataGrid 
-                    rows={miniatureData}
-                    columns={columns}
-                    initialState={{ pagination: { paginationModel } }}
-                    pageSizeOptions={[5, 10, 20]}
-                    rowSelectionModel={selectedRowId ? [selectedRowId] : []}
-                    onRowSelectionModelChange={(newSelection) => {
-                        const selectedId = newSelection[0] || null; // Get the first selected row ID or null
-                        const rowData = miniatureData.find(row => row.id === selectedId); // Find the row data
-                        if (selectedRowId == selectedId) {
-                            setSelectedRowId(null);
-                            setSelectedRowData(null);
-                        }
-                        else {
-                            setSelectedRowId(selectedId);
-                            setSelectedRowData(rowData);
-                        }
-                    }}
+            
+            {(miniatureData.length > 0) ? (
+                <Paper
+                    elevation={3}
                     sx={{
                         width: 1,
-                        '& .MuiDataGrid-root': {
-                            backgroundColor: theme.palette.secondary.main,
-                            color: theme.palette.secondary.contrastText,
-                        },
-                        '& .MuiDataGrid-columnHeaders': {
-                            backgroundColor: theme.palette.secondary.main,
-                            color: theme.palette.secondary.contrastText,
-                        },
-                        '& .MuiDataGrid-columnHeader': {
-                            backgroundColor: theme.palette.secondary.main,
-                            color: theme.palette.secondary.contrastText,
-                        },
-                        '& .MuiDataGrid-columnHeaderRow': {
-                            backgroundColor: theme.palette.secondary.main,
-                            color: theme.palette.secondary.contrastText,
-                        },
-                        '& .MuiDataGrid-cell': {
-                            color: theme.palette.secondary.contrastText,
-                        },
-                        '& .MuiDataGrid-footerContainer': {
-                            backgroundColor: theme.palette.secondary.main,
-                            color: theme.palette.secondary.contrastText,
-                        },
-                        '& .MuiSvgIcon-root': {
-                            color: theme.palette.secondary.contrastText,
-                        },
-                        '& .MuiDataGrid-sortIcon': {
-                            color: theme.palette.secondary.contrastText,
-                        },
-                        '& .MuiTablePagination-root': {
-                            color: theme.palette.secondary.contrastText,
-                        },
+                        display: "flex",
+                        flexDirection: 'column',
+                        justifyContent: 'space-evenly',
+                        alignItems: 'center',
+                        padding: 2,
+                        marginTop: 4,
+                        backgroundColor: theme.palette.secondary.main,
+                        color: theme.palette.secondary.contrastText,
                     }}
-                />
-            </Paper>
+                >
+                    <DataGrid 
+                        rows={miniatureData}
+                        columns={columns}
+                        initialState={{ pagination: { paginationModel } }}
+                        pageSizeOptions={[5, 10, 20]}
+                        rowSelectionModel={selectedRowId ? [selectedRowId] : []}
+                        onRowSelectionModelChange={(newSelection) => {
+                            const selectedId = newSelection[0] || null; // Get the first selected row ID or null
+                            const rowData = miniatureData.find(row => row.id === selectedId); // Find the row data
+                            if (selectedRowId == selectedId) {
+                                setSelectedRowId(null);
+                                setSelectedRowData(null);
+                            }
+                            else {
+                                setSelectedRowId(selectedId);
+                                setSelectedRowData(rowData);
+                            }
+                        }}
+                        sx={{
+                            width: 1,
+                            '& .MuiDataGrid-root': {
+                                backgroundColor: theme.palette.secondary.main,
+                                color: theme.palette.secondary.contrastText,
+                            },
+                            '& .MuiDataGrid-columnHeaders': {
+                                backgroundColor: theme.palette.secondary.main,
+                                color: theme.palette.secondary.contrastText,
+                            },
+                            '& .MuiDataGrid-columnHeader': {
+                                backgroundColor: theme.palette.secondary.main,
+                                color: theme.palette.secondary.contrastText,
+                            },
+                            '& .MuiDataGrid-columnHeaderRow': {
+                                backgroundColor: theme.palette.secondary.main,
+                                color: theme.palette.secondary.contrastText,
+                            },
+                            '& .MuiDataGrid-cell': {
+                                color: theme.palette.secondary.contrastText,
+                            },
+                            '& .MuiDataGrid-footerContainer': {
+                                backgroundColor: theme.palette.secondary.main,
+                                color: theme.palette.secondary.contrastText,
+                            },
+                            '& .MuiSvgIcon-root': {
+                                color: theme.palette.secondary.contrastText,
+                            },
+                            '& .MuiDataGrid-sortIcon': {
+                                color: theme.palette.secondary.contrastText,
+                            },
+                            '& .MuiTablePagination-root': {
+                                color: theme.palette.secondary.contrastText,
+                            },
+                        }}
+                    />
+                </Paper>
+            ) : (
+                <Typography variant="h6" sx={{marginTop: 10}}>Create Your First Miniature Below</Typography>
+            )}
 
             {selectedRowId && (
                 <Stack direction="row" spacing={2} sx={{ marginTop: 2 }}>
