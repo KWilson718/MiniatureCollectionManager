@@ -2,11 +2,15 @@ import { useRouter } from "next/navigation";
 
 import { Paper, useTheme, Button, Box, Typography } from "@mui/material";
 import GroupIcon from '@mui/icons-material/Group';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function Faction({factionID, title, description}) {
     const theme = useTheme();
 
     const router = useRouter();
+
+    const buttonHeight = "5rem";
 
     return(
         <>
@@ -15,7 +19,7 @@ export default function Faction({factionID, title, description}) {
                 sx={{
                     width: 1,
                     display: "flex",
-                    flexDirection: 'column',
+                    flexDirection: 'row',
                     justifyContent: 'space-evenly',
                     alignItems: 'center',
                     padding: 2,
@@ -28,6 +32,7 @@ export default function Faction({factionID, title, description}) {
                     color="primary"
                     sx={{
                         width: 1,
+                        height: buttonHeight,
                         padding: 1,
                         display: 'flex',
                         justifyContent: 'space-evenly',
@@ -77,6 +82,54 @@ export default function Faction({factionID, title, description}) {
                             <Typography variant="p" sx={{paddingTop: .75}}>{description}</Typography>
                         ):(<></>)}
                     </Box>
+                </Button>
+                <Button
+                    variant="text"
+                    color="primary"
+                    sx={{
+                        width: 1/8,
+                        height: buttonHeight,
+                        padding: 1,
+                        display: 'flex',
+                        justifyContent: 'space-evenly',
+                        alignItems: 'center',
+                        paddingRight: 2,
+                        backgroundColor: theme.palette.secondary.main, // Ensure background matches theme
+                        color: theme.palette.secondary.contrastText,   // Use contrast text color
+                        '&.Mui-selected': {
+                            backgroundColor: theme.palette.secondary.main, // Keep background consistent when selected
+                            color: theme.palette.secondary.contrastText,   // Keep text color consistent
+                        },
+                        '&:hover': {
+                            backgroundColor: theme.palette.secondary.dark, // Optional: Add a hover effect
+                        },
+                    }}
+                >
+                    <EditIcon />
+                </Button>
+                <Button
+                    variant="text"
+                    color="primary"
+                    sx={{
+                        width: 1/8,
+                        height: buttonHeight,
+                        padding: 1,
+                        display: 'flex',
+                        justifyContent: 'space-evenly',
+                        alignItems: 'center',
+                        paddingRight: 2,
+                        backgroundColor: theme.palette.secondary.main, // Ensure background matches theme
+                        color: theme.palette.secondary.contrastText,   // Use contrast text color
+                        '&.Mui-selected': {
+                            backgroundColor: theme.palette.secondary.main, // Keep background consistent when selected
+                            color: theme.palette.secondary.contrastText,   // Keep text color consistent
+                        },
+                        '&:hover': {
+                            backgroundColor: theme.palette.secondary.dark, // Optional: Add a hover effect
+                        },
+                    }}
+                >
+                    <DeleteIcon />
                 </Button>
             </Paper>
         </>
