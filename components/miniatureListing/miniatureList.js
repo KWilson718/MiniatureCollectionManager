@@ -84,6 +84,39 @@ export default function MiniatureListComponent({ factionID }) {
 
     const handleDelete = async () => {
         console.log("Delete Row", selectedRowData)
+
+        try {
+            const response = await fetch('/api/database', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type: 'Miniature',
+                    id: selectedRowData.id
+                })
+            });
+
+            if (response.ok){
+                console.log('Miniature Successfully Deleted!');
+                fetchMiniatures();
+                setMiniatureName('');
+                setMiniatureDescription('');
+                setQtyNOS(0);
+                setQtyBuilt(0); 
+                setQtyPrimed(0); 
+                setQtyPartially(0); 
+                setQtyBattleReady(0);
+                setQtyParadeReady(0);
+            }
+            else {
+                console.error('Failed to delete miniature');
+                console.error('Responded with', response);
+            }
+        }
+        catch(err){
+            console.error('Error Deleting Miniature',err);
+        }
     };
 
     const handleCreateMiniature = async () => {

@@ -1,4 +1,5 @@
 import initDB from "@/lib/db";
+import { resolve } from "styled-jsx/css";
 
 export async function GET (req) {
     const db = await initDB();
@@ -371,6 +372,82 @@ async function updateMiniature(db, data) {
         });
 
         // Close the database connection
+        db.close((err) => {
+            if (err) {
+                console.error('Error Closing Database: ', err);
+            }
+        });
+    });
+}
+
+export async function DELETE(req){
+    const db = await initDB();
+    const { type, id } = await req.json();
+
+    console.log('Type Set to: ', type);
+
+    switch(type){
+        case 'Miniature':
+            return await deleteMiniature(db, id);
+        default:
+            console.log('A Type of: ', type, ' was recieved and is being rejected');
+            return new Promise((resolve, reject) => {
+                reject(
+                    new Response(
+                        JSON.stringify({
+                            error: 'Type Not Specified Correctly, Valid Types are Brand, Game, Faction, Miniature'
+                        }),
+                        {
+                            status: 500,
+                        }
+                    )
+                )
+            });
+    }
+}
+
+async function deleteMiniature(db, id) {
+    return new Promise((resolve, reject) => {
+        const query = 'DELETE FROM miniatures WHERE id = ?';
+        const params = [id];
+
+        db.run(query, params, function (err) {
+            if (err) {
+                console.error("Inside Delete Miniature Error:", err);
+                reject(
+                    new Response(
+                        JSON.stringify({ 
+                            error: err.message,
+                            debugError: err
+                        }), {
+                        status: 500,
+                    })
+                );
+            } else if (this.changes === 0) {
+                resolve(
+                    new Response(
+                        JSON.stringify({
+                            success: false,
+                            message: 'Unable to Find Miniature',
+                            deletedId: id
+                        }),
+                        { status: 404 }
+                    )
+                );
+            } else {
+                resolve(
+                    new Response(
+                        JSON.stringify({
+                            success: true,
+                            message: 'Miniature deleted successfully',
+                            deletedId: id
+                        }),
+                        { status: 200 }
+                    )
+                );
+            }
+        });
+
         db.close((err) => {
             if (err) {
                 console.error('Error Closing Database: ', err);

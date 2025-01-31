@@ -13,9 +13,16 @@ Miniature Collection Manager aims to organize and display information about a ho
 
 Miniature Collection Manager is an example of a simple CRUD Application to further grow upon my learning experience
 
+## Data Model
+
+Brands, Games, Factions, and Miniatures are all different SQL Tables, in order to promote a form of normalization, as well as ease of access of details
+
+Most data is stored in a miniature data row, but chains up using foreign keys
+
 ## Technologies Used
 
 - NPM
 - React using NextJS
 - Material UI
+- MUI - X for DataGrid
 - SQLite
