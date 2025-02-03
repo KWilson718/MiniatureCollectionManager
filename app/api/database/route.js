@@ -454,6 +454,8 @@ export async function DELETE(req){
     switch(type){
         case 'Miniature':
             return await deleteMiniature(db, id);
+        case 'Faction':
+            return await deleteFaction(db, id);
         default:
             console.log('A Type of: ', type, ' was recieved and is being rejected');
             return new Promise((resolve, reject) => {
@@ -520,3 +522,167 @@ async function deleteMiniature(db, id) {
         });
     });
 }
+
+async function deleteMiniaturesGivenFactionID(db, id) {
+    return new Promise((resolve, reject) => {
+        const query = 'DELETE FROM miniatures WHERE factionID = ?';
+        const params = [id];
+
+        db.run(query, params, function (err) {
+            if (err) {
+                console.error("Error deleting miniatures:", err);
+                reject(false);
+            } else {
+                resolve(true);
+            }
+        });
+    });
+}
+
+async function deleteFaction(db, id) {
+    try {
+        const deleteMiniaturesSuccess = await deleteMiniaturesGivenFactionID(db, id);
+        if (!deleteMiniaturesSuccess) {
+            return new Promise((resolve, reject) => {
+                reject(
+                    new Response(JSON.stringify({ 
+                        error: "Failed To Delete Miniature Children",
+                        debugError: null
+                    }), {
+                        status: 500,
+                    })
+                );
+            });
+        }
+
+        return new Promise((resolve, reject) => {
+            const query = 'DELETE FROM factions WHERE id = ?';
+            const params = [id];
+
+            db.run(query, params, function (err) {
+                if (err) {
+                    reject(
+                        new Response(
+                            JSON.stringify({ 
+                                error: err.message,
+                                debugError: err
+                            }), {
+                            status: 500,
+                        })
+                    );
+                } else if (this.changes === 0) {
+                    resolve(
+                        new Response(
+                            JSON.stringify({
+                                success: false,
+                                message: 'Unable to Find Faction',
+                                deletedId: id
+                            }),
+                            { status: 404 }
+                        )
+                    );
+                } else {
+                    resolve(
+                        new Response(
+                            JSON.stringify({
+                                success: true,
+                                message: 'Faction deleted successfully',
+                                deletedId: id
+                            }),
+                            { status: 200 }
+                        )
+                    );
+                }
+            });
+        });
+    } catch (error) {
+        return new Promise((resolve, reject) => {
+            reject(
+                new Response(
+                    JSON.stringify({ 
+                        error: error.message,
+                        debugError: error
+                    }), {
+                    status: 500,
+                })
+            );
+        });
+    }
+}
+
+// async function deleteFaction(db, id) {
+//     const deleteMiniaturesSuccess = await deleteMiniaturesGivenFactionID(db, id);
+//     if (!deleteMiniaturesSuccess) {
+//         return new Promise((resolve, reject) => {
+//             reject(
+//                 new Response(JSON.stringify({ 
+//                     error: "Failed To Delete Miniature Children",
+//                     debugError: null
+//                 }), {
+//                     status: 500,
+//                 })
+//             );
+//         });
+//     }
+
+//     return new Promise((resolve, reject) => {
+//         const query = 'DELETE FROM factions WHERE id = ?';
+//         const params = [id];
+
+//         db.run(query, params, function (err) {
+//             if (err) {
+//                 reject(
+//                     new Response(
+//                         JSON.stringify({ 
+//                             error: err.message,
+//                             debugError: err
+//                         }), {
+//                         status: 500,
+//                     })
+//                 );
+//             } else if (this.changes === 0) {
+//                 resolve(
+//                     new Response(
+//                         JSON.stringify({
+//                             success: false,
+//                             message: 'Unable to Find Faction',
+//                             deletedId: id
+//                         }),
+//                         { status: 404 }
+//                     )
+//                 );
+//             } else {
+//                 resolve(
+//                     new Response(
+//                         JSON.stringify({
+//                             success: true,
+//                             message: 'Faction deleted successfully',
+//                             deletedId: id
+//                         }),
+//                         { status: 200 }
+//                     )
+//                 );
+//             }
+//         });
+
+//         db.close((err) => {
+//             if (err) {
+//                 console.error('Error Closing Database: ', err);
+//             }
+//         });
+//     });
+// }
+
+// async function deleteMiniaturesGivenFactionID(db, id) {
+//     const query = 'DELETE FROM miniatures WHERE factionID = ?';
+//     const params = [id];
+
+//     db.run(query, params, function (err) {
+//         if (err) {
+//             console.error("Error deleting miniatures:", err);
+//             reject(false);
+//         } else {
+//             resolve(true);
+//         }
+//     });
+// }

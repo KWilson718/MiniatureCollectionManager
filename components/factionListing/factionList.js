@@ -138,6 +138,35 @@ export default function FactionListComponent({gameID}) {
 
     const handleFactionDelete = async (itemID) => {
         console.log("Handle Faction Delete Hit, Faction ID:", itemID);
+        const factionToDelete = factionData.find(object => object.id === itemID);
+        console.log("Faction To Delete:", factionToDelete);
+        
+        try {
+            const response = await fetch('/api/database', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type: 'Faction',
+                    id: factionToDelete.id
+                })
+            });
+
+            if (response.ok) {
+                console.log('Faction Successfully Deleted');
+                fetchFactions();
+                setFactionName('');
+                setFactionDescription('');
+            }
+            else{
+                console.error('Failed to delete faction');
+                console.error('Responded with', response);
+            }
+        }
+        catch(err) {
+            console.error('Error Deleting Faction', err);
+        }
     }
 
     if (!Array.isArray(factionData)) {
