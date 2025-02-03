@@ -5,7 +5,7 @@ import { useTheme, Button, Typography, Dialog, DialogTitle, DialogContent, Dialo
 import Faction from "./faction";
 
 export default function FactionListComponent({gameID}) {
-    const [factionDoalogEditMode, setFactionDialogEditMode] = useState(false); // Create mode when false, edit mode when true
+    const [factionDialogEditMode, setFactionDialogEditMode] = useState(false); // Create mode when false, edit mode when true
     const [factionEditPrevVal, setFactionEditPrevVal] = useState({});
 
     const [factionDialogOpen, setFactionDialogOpen] = useState(false);
@@ -43,7 +43,7 @@ export default function FactionListComponent({gameID}) {
         fetchFactions();
     };
 
-    const handleFactionDialogSubmit = async () => {
+    const handleAddFaction = async () => {
         try{
             const response = await fetch('api/database', {
                 method: 'POST',
@@ -73,6 +73,54 @@ export default function FactionListComponent({gameID}) {
         catch (err) {
             console.error('Error Adding Faction: ', err);
         }
+    }
+
+    const handleEditFaction = async() => {
+        try {
+            const response = await fetch('/api/database', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type: 'Faction',
+                    data: {
+                        id: factionEditPrevVal.id,
+                        parentID: factionEditPrevVal.gameID,
+                        name: factionName,
+                        description: factionDescription,
+                    }
+                })
+            });
+
+            if (response.ok) {
+                console.log('Faction Successfully Edited!');
+                fetchFactions();
+                setFactionName('');
+                setFactionDescription('');
+                setFactionEditPrevVal({});
+            }
+            else {
+                console.error('Failed to edit faction');
+            }
+        }
+        catch (err) {
+            console.error("Error Editing Faction");
+        }
+    }
+
+    const handleFactionDialogSubmit = async () => {
+        try {
+            if (factionDialogEditMode) {
+                handleEditFaction();
+            }
+            else {
+                handleAddFaction();
+            }
+        }
+        catch (err) {
+            console.error("Error in Handle Faction Dialog Function:", err);
+        }
 
         setFactionDialogOpen(false);
     };
@@ -80,9 +128,10 @@ export default function FactionListComponent({gameID}) {
     const handleFactionEdit = async (itemID) => {
         console.log("Handle Faction Edit Hit, Faction ID:", itemID);
         const factionToEdit = factionData.find(object => object.id === itemID);
+        console.log("Editing Faction:", factionToEdit);
         setFactionEditPrevVal(factionToEdit);
-        setFactionName(factionToEdit.name);
-        setFactionDescription(factionToEdit.description || '');
+        setFactionName(factionToEdit.factionName);
+        setFactionDescription(factionToEdit.factionDescription || '');
         setFactionDialogEditMode(true);
         setFactionDialogOpen(true);        
     }

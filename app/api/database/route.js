@@ -288,6 +288,8 @@ export async function PUT(req){
     switch(type){
         case 'Miniature':
             return await updateMiniature(db, data);
+        case 'Faction':
+            return await updateFaction(db, data);
         default:
             console.log('A Type of: ', type, ' was recieved and is being rejected');
             return new Promise((resolve, reject) => {
@@ -360,6 +362,69 @@ async function updateMiniature(db, data) {
                         new Response(
                             JSON.stringify({
                                 id: data.id, // Return the ID of the updated miniature
+                            }),
+                            {
+                                status: 200,
+                                headers: { 'Content-Type': 'application/json' },
+                            }
+                        )
+                    );
+                }
+            }
+        });
+
+        // Close the database connection
+        db.close((err) => {
+            if (err) {
+                console.error('Error Closing Database: ', err);
+            }
+        });
+    });
+}
+
+async function updateFaction(db, data) {
+    return new Promise((resolve, reject) => {
+        // Construct the SQL query to update a faction by its id
+        const query = `UPDATE factions
+                       SET 
+                           factionName = ?, 
+                           factionDescription = ?
+                       WHERE id = ?`;
+
+        // Ensure all required fields are provided
+        const description = data.description ? data.description : null;
+
+        // Prepare the parameters for the query
+        const params = [
+            data.name, 
+            description, 
+            data.id  // the id of the faction to update
+        ];
+
+        // Execute the query
+        db.run(query, params, function (err) {
+            if (err) {
+                reject(
+                    new Response(JSON.stringify({ error: err.message }), {
+                        status: 500,
+                    })
+                );
+            } else {
+                // Check if any row was updated
+                if (this.changes === 0) {
+                    reject(
+                        new Response(
+                            JSON.stringify({
+                                error: 'Faction not found or no changes made.',
+                            }),
+                            { status: 404 }
+                        )
+                    );
+                } else {
+                    resolve(
+                        new Response(
+                            JSON.stringify({
+                                id: data.id, // Return the ID of the updated faction
                             }),
                             {
                                 status: 200,
