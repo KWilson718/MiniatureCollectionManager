@@ -521,6 +521,8 @@ export async function DELETE(req){
             return await deleteMiniature(db, id);
         case 'Faction':
             return await deleteFaction(db, id);
+        case 'Game':
+            return await deleteGame(db, id);
         default:
             console.log('A Type of: ', type, ' was recieved and is being rejected');
             return new Promise((resolve, reject) => {
@@ -725,7 +727,9 @@ async function deleteFactionsGivenGameID(db, gameId) {
 async function deleteGame(db, id) {
     try {
         const clearFactions = await deleteFactionsGivenGameID(db, id);
-        if (!clearFactions.ok){
+        console.log("Clear Factions Given Game ID returned:", clearFactions);
+        if (!clearFactions){
+            console.log("Clear Factions False");
             return new Promise((resolve, reject) => {
                 reject(
                     new Response(
