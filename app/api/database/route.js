@@ -290,6 +290,8 @@ export async function PUT(req){
             return await updateMiniature(db, data);
         case 'Faction':
             return await updateFaction(db, data);
+        case 'Game':
+            return await updateGame(db, data);
         default:
             console.log('A Type of: ', type, ' was recieved and is being rejected');
             return new Promise((resolve, reject) => {
@@ -416,6 +418,69 @@ async function updateFaction(db, data) {
                         new Response(
                             JSON.stringify({
                                 error: 'Faction not found or no changes made.',
+                            }),
+                            { status: 404 }
+                        )
+                    );
+                } else {
+                    resolve(
+                        new Response(
+                            JSON.stringify({
+                                id: data.id, // Return the ID of the updated faction
+                            }),
+                            {
+                                status: 200,
+                                headers: { 'Content-Type': 'application/json' },
+                            }
+                        )
+                    );
+                }
+            }
+        });
+
+        // Close the database connection
+        db.close((err) => {
+            if (err) {
+                console.error('Error Closing Database: ', err);
+            }
+        });
+    });
+}
+
+async function updateGame(db, data) {
+    return new Promise((resolve, reject) => {
+        // Construct the SQL query to update a faction by its id
+        const query = `UPDATE games
+                       SET 
+                           gameName = ?, 
+                           gameDescription = ?
+                       WHERE id = ?`;
+
+        // Ensure all required fields are provided
+        const description = data.description ? data.description : null;
+
+        // Prepare the parameters for the query
+        const params = [
+            data.name, 
+            description, 
+            data.id  // the id of the faction to update
+        ];
+
+        // Execute the query
+        db.run(query, params, function (err) {
+            if (err) {
+                reject(
+                    new Response(JSON.stringify({ error: err.message }), {
+                        status: 500,
+                    })
+                );
+            } else {
+                // Check if any row was updated
+                if (this.changes === 0) {
+                    reject(
+                        new Response(
+                            JSON.stringify({
+                                error: 'Game not found or no changes made.',
                             }),
                             { status: 404 }
                         )
@@ -610,79 +675,118 @@ async function deleteFaction(db, id) {
     }
 }
 
-// async function deleteFaction(db, id) {
-//     const deleteMiniaturesSuccess = await deleteMiniaturesGivenFactionID(db, id);
-//     if (!deleteMiniaturesSuccess) {
-//         return new Promise((resolve, reject) => {
-//             reject(
-//                 new Response(JSON.stringify({ 
-//                     error: "Failed To Delete Miniature Children",
-//                     debugError: null
-//                 }), {
-//                     status: 500,
-//                 })
-//             );
-//         });
-//     }
+async function deleteFactionsGivenGameID(db, gameId) {
+    return new Promise((resolve, reject) => {
+        const selectQuery = 'SELECT id FROM factions WHERE gameID = ?';
+        db.all(selectQuery, [gameId], async (err, rows) => {
+            if (err) {
+                console.error("Error retrieving factions:", err);
+                return reject(
+                    new Response(
+                        JSON.stringify({ error: err.message, debugError: err }),
+                        { status: 500 }
+                    )
+                );
+            }
 
-//     return new Promise((resolve, reject) => {
-//         const query = 'DELETE FROM factions WHERE id = ?';
-//         const params = [id];
+            try {
+                // Delete miniatures for each faction
+                for (const row of rows) {
+                    await deleteMiniaturesGivenFactionID(db, row.id);
+                }
 
-//         db.run(query, params, function (err) {
-//             if (err) {
-//                 reject(
-//                     new Response(
-//                         JSON.stringify({ 
-//                             error: err.message,
-//                             debugError: err
-//                         }), {
-//                         status: 500,
-//                     })
-//                 );
-//             } else if (this.changes === 0) {
-//                 resolve(
-//                     new Response(
-//                         JSON.stringify({
-//                             success: false,
-//                             message: 'Unable to Find Faction',
-//                             deletedId: id
-//                         }),
-//                         { status: 404 }
-//                     )
-//                 );
-//             } else {
-//                 resolve(
-//                     new Response(
-//                         JSON.stringify({
-//                             success: true,
-//                             message: 'Faction deleted successfully',
-//                             deletedId: id
-//                         }),
-//                         { status: 200 }
-//                     )
-//                 );
-//             }
-//         });
+                // Delete factions
+                const deleteQuery = 'DELETE FROM factions WHERE gameID = ?';
+                db.run(deleteQuery, [gameId], function (err) {
+                    if (err) {
+                        console.error("Error deleting factions:", err);
+                        return reject(
+                            new Response(
+                                JSON.stringify({ error: err.message, debugError: err }),
+                                { status: 500 }
+                            )
+                        );
+                    }
+                    resolve(true);
+                });
+            } catch (error) {
+                console.error("Error deleting factions and their miniatures:", error);
+                reject(
+                    new Response(
+                        JSON.stringify({ error: error.message, debugError: error }),
+                        { status: 500 }
+                    )
+                );
+            }
+        });
+    });
+}
 
-//         db.close((err) => {
-//             if (err) {
-//                 console.error('Error Closing Database: ', err);
-//             }
-//         });
-//     });
-// }
+async function deleteGame(db, id) {
+    try {
+        const clearFactions = await deleteFactionsGivenGameID(db, id);
+        if (!clearFactions.ok){
+            return new Promise((resolve, reject) => {
+                reject(
+                    new Response(
+                        JSON.stringify({ error: clearFactions }),
+                        { status: 500 }
+                    )
+                );
+            });
+        }
 
-// async function deleteMiniaturesGivenFactionID(db, id) {
-//     const query = 'DELETE FROM miniatures WHERE factionID = ?';
-//     const params = [id];
+        return new Promise((resolve, reject) => {
+            const query = 'DELETE FROM games WHERE id = ?';
+            const params = [id];
 
-//     db.run(query, params, function (err) {
-//         if (err) {
-//             console.error("Error deleting miniatures:", err);
-//             reject(false);
-//         } else {
-//             resolve(true);
-//         }
-//     });
-// }
+            db.run(query, params, function (err) {
+                if (err) {
+                    reject(
+                        new Response(
+                            JSON.stringify({ 
+                                error: err.message,
+                                debugError: err
+                            }), {
+                            status: 500,
+                        })
+                    );
+                } else if (this.changes === 0) {
+                    resolve(
+                        new Response(
+                            JSON.stringify({
+                                success: false,
+                                message: 'Unable to Find Game',
+                                deletedId: id
+                            }),
+                            { status: 404 }
+                        )
+                    );
+                } else {
+                    resolve(
+                        new Response(
+                            JSON.stringify({
+                                success: true,
+                                message: 'Game deleted successfully',
+                                deletedId: id
+                            }),
+                            { status: 200 }
+                        )
+                    );
+                }
+            });
+        });
+    } catch (error) {
+        return new Promise((resolve, reject) => {
+            reject(
+                new Response(
+                    JSON.stringify({ 
+                        error: error.message,
+                        debugError: error
+                    }), {
+                    status: 500,
+                })
+            );
+        });
+    }
+}

@@ -5,6 +5,9 @@ import { Typography, useTheme, Button, Dialog, DialogTitle, DialogContent, Dialo
 import Game from "./game";
 
 export default function GameListComponent({brandID}) {
+    const [gameDialogEditMode, setGameDialogEditMode] = useState(false); // Create mode when false, edit mode when true
+    const [gameEditPrevVal, setGameEditPrevVal] = useState({});
+
     const [gameDialogOpen, setGameDialogOpen] = useState(false);
     const [gameName, setGameName] = useState('');
     const [gameDescription, setGameDescription] = useState('');
@@ -40,7 +43,7 @@ export default function GameListComponent({brandID}) {
         fetchGames();
     };
 
-    const handleGameDialogSubmit = async () => {
+    const handleAddGame = async () => {
         try{
             const response = await fetch('api/database', {
                 method: 'POST',
@@ -70,8 +73,100 @@ export default function GameListComponent({brandID}) {
         catch (err) {
             console.error('Error Adding Game: ', err);
         }
+    }
+
+    const handleEditGame = async () => {
+        try {
+            const response = await fetch('/api/database', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type: 'Game',
+                    data: {
+                        id: gameEditPrevVal.id,
+                        parentID: gameEditPrevVal.gameID,
+                        name: gameName,
+                        description: gameDescription,
+                    }
+                })
+            });
+
+            if (response.ok) {
+                console.log('Game Successfully Edited!');
+                fetchGames();
+                setGameName('');
+                setGameDescription('');
+                setGameEditPrevVal({});
+            }
+            else {
+                console.error('Failed to edit game');
+            }
+        }
+        catch (err) {
+            console.error("Error Editing Game:", err);
+        }
+    }
+
+    const handleGameDialogSubmit = async () => {
+        try {
+            if (gameDialogEditMode) {
+                handleEditGame();
+            }
+            else {
+                handleAddGame();
+            }
+        }
+        catch (err) {
+            console.error("Error in Handle Game Dialog Function:", err);
+        }
 
         setGameDialogOpen(false);
+    };
+
+    const handleDeleteGame = async (gameID) => {
+        console.log("Handle Delete Game clicked with Game ID:", gameID);
+        const gameToDelete = gameData.find(object => object.id === gameID);
+        console.log("Game To Delete:", gameToDelete);
+        
+        try {
+            const response = await fetch('/api/database', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type: 'Game',
+                    id: gameToDelete.id
+                })
+            });
+
+            if (response.ok) {
+                console.log('Game Successfully Deleted');
+                fetchGames();
+                setGameName('');
+                setGameDescription('');
+            }
+            else{
+                console.error('Failed to delete game');
+                console.error('Responded with', response);
+            }
+        }
+        catch(err) {
+            console.error('Error Deleting Game', err);
+        }
+    };
+
+    const handleEditPrep = async (gameID) => {
+        console.log("Handle Edit Game clicked with Game ID:", gameID);
+        const gameToEdit = gameData.find(object => object.id === gameID);
+        console.log("Editing Game:", gameToEdit);
+        setGameEditPrevVal(gameToEdit);
+        setGameName(gameToEdit.gameName);
+        setGameDescription(gameToEdit.gameDescription || '');
+        setGameDialogEditMode(true);
+        setGameDialogOpen(true);
     };
 
     if (!Array.isArray(gameData)) {
@@ -89,7 +184,7 @@ export default function GameListComponent({brandID}) {
                 }}
             >
                 {gameData.map((game) => (
-                    <Game key={game.id} gameID={game.id} title={game.gameName} description={game.gameDescription} />
+                    <Game key={game.id} gameID={game.id} title={game.gameName} description={game.gameDescription} editGame={() => handleEditPrep(game.id)} deleteGame={() => handleDeleteGame(game.id)} />
                 ))}
             </Stack>
             <Button
@@ -118,7 +213,7 @@ export default function GameListComponent({brandID}) {
                     },
                 }}  
             >
-                <DialogTitle>Add New Game</DialogTitle>
+                <DialogTitle>{gameDialogEditMode ? 'Edit Game' : 'Add New Game'}</DialogTitle>
                 <DialogContent>
                     <TextField
                         label="Game Name"

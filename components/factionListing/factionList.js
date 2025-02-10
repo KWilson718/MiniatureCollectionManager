@@ -105,7 +105,7 @@ export default function FactionListComponent({gameID}) {
             }
         }
         catch (err) {
-            console.error("Error Editing Faction");
+            console.error("Error Editing Faction:", err);
         }
     }
 

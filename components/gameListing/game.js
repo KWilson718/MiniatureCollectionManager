@@ -8,19 +8,17 @@ import FactionListComponent from '../factionListing/factionList';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-export default function Game({gameID, title, description}) {
+export default function Game({gameID, title, description, editGame, deleteGame}) {
     const [selected, setSelected] = useState(false);
 
     const theme = useTheme();
 
-    const handleEdit = (event) => {
-        event.stopPropagation(); // Prevents ToggleButton from toggling
-        console.log(`Edit game: ${gameID}`);
+    const handleEdit = () => {
+        editGame(gameID);
     };
 
-    const handleDelete = (event) => {
-        event.stopPropagation(); // Prevents ToggleButton from toggling
-        console.log(`Delete game: ${gameID}`);
+    const handleDelete = () => {
+        deleteGame(gameID);
     };
 
     return(
@@ -68,7 +66,6 @@ export default function Game({gameID, title, description}) {
                         </Box>
                     </ToggleButton>
 
-                    {/* Move action buttons outside the ToggleButton */}
                     <Box sx={{ 
                         display: 'flex', 
                         alignItems: 'center',
