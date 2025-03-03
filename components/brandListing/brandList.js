@@ -5,6 +5,9 @@ import { Stack, Divider, Button, TextField, Typography, Dialog, DialogTitle, Dia
 import Brand from "./brand";
 
 export default function BrandListComponent() {
+    const [brandDialogEditMode, setBradnDialogEditMode] = useState(false);
+    const [brandEditPrevVal, setBrandEditPrevVal] = useState({});
+
     const [brandDialogOpen, setBrandDialogOpen] = useState(false);
     const [brandName, setBrandName] = useState('');
     const [brandDescription, setBrandDescription] = useState('');
@@ -28,7 +31,7 @@ export default function BrandListComponent() {
         fetchItems();
     }, []);
 
-    const handleBrandDialogSubmit = async () => {
+    const handleAddBrand = async () => {
         try {
             const response  = await fetch('/api/database', {
                 method: 'POST',
@@ -57,8 +60,99 @@ export default function BrandListComponent() {
         catch (err) {
             console.error('Error Adding Brand: ', err);
         }
+    }
 
+    const handleEditBrand = async () => {
+        console.log("Edit Game Submit Hit");
+        try {
+            const response = await fetch('/api/database', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type: 'Brand',
+                    data: {
+                        id: brandEditPrevVal.id,
+                        name: brandName,
+                        description: brandDescription,
+                    }
+                })
+            });
+
+            if (response.ok) {
+                console.log('Brand Successfully Edited!');
+                fetchItems();
+                setBrandName('');
+                setBrandDescription('');
+                setBrandEditPrevVal({});
+            }
+            else {
+                console.error('Failed to edit brand');
+            }
+        }
+        catch (err) {
+            console.error("Error Editing Brand:", err);
+        }
+    }
+
+    const handleBrandDialogSubmit = async () => {
+        try {
+            if (brandDialogEditMode) {
+                handleEditBrand();
+            }
+            else {
+                handleAddBrand();
+            }
+        }
+        catch (err) {
+            console.error("Error in Handle Brand Dialog Function", err);
+        }
+        
         setBrandDialogOpen(false);
+    }
+
+    const handleDeleteBrand = async (brandID) => {
+        console.log("Handle Delete Brand clicked with Brand ID:", brandID);
+        const brandToDelete = brandData.find(object => object.id === brandID);
+        console.log("Brand To Delete:", brandToDelete);
+        try {
+            const response = await fetch('/api/database', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type: 'Brand',
+                    id: brandToDelete.id
+                })
+            });
+
+            if (response.ok) {
+                console.log('Brand Successfully Deleted');
+                fetchItems();
+                setBrandName('');
+                setBrandDescription('');
+            }
+            else{
+                console.error('Failed to delete brand');
+                console.error('Responded with', response);
+            }
+        }
+        catch(err) {
+            console.error('Error Deleting Brand', err);
+        }
+    }
+
+    const handleEditPrep = async (brandID) => {
+        console.log("Handle Edit Brand clicked with Brand ID:", brandID);
+        const brandToEdit = brandData.find(object => object.id === brandID);
+        console.log("Editing Brand:", brandToEdit);
+        setBrandEditPrevVal(brandToEdit);
+        setBrandName(brandToEdit.brandName);
+        setBrandDescription(brandToEdit.brandDescription || '');
+        setBradnDialogEditMode(true);
+        setBrandDialogOpen(true);
     }
 
     if (!Array.isArray(brandData)) {
@@ -76,7 +170,7 @@ export default function BrandListComponent() {
                 }}
             >
                 {brandData.map((brand) => (
-                    <Brand key={brand.id} brandID={brand.id} title={brand.brandName} description={brand.brandDescription} />
+                    <Brand key={brand.id} brandID={brand.id} title={brand.brandName} description={brand.brandDescription} editBrand={() => handleEditPrep(brand.id)} deleteBrand={() => handleDeleteBrand(brand.id)} />
                 ))}
             </Stack>
             <Button
@@ -105,7 +199,7 @@ export default function BrandListComponent() {
                     },
                 }} 
             >
-                <DialogTitle>Add New Brand</DialogTitle>
+                <DialogTitle>{brandDialogEditMode ? 'Edit Brand' : 'Add New Brand'}</DialogTitle>
                 <DialogContent>
                     <TextField
                         label="Brand Name"
