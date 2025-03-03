@@ -247,8 +247,3 @@ export default function FactionListComponent({gameID}) {
         </>
     );
 }
-
-
-
-///////////////////////////////////////////////////////////////////////////////
-// In progress on adding edit mode, have the ability to differ between dialog modes, but need to implement submit functionality equivalence
